@@ -1,0 +1,3672 @@
+
+<!doctype html>
+<html lang="de" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Plattform-agnostisches Agenten-Framework — Tickets autonom in Pull Requests verwandeln.">
+      
+      
+      
+        <link rel="canonical" href="https://torben-erz.github.io/agentry-dist/produkt/offene-punkte.html">
+      
+      
+        <link rel="prev" href="versionierung.html">
+      
+      
+        <link rel="next" href="phasen-historie.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Offene Punkte - Agentry</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#offene-punkte" class="md-skip">
+          Zum Inhalt
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
+    <a href="../index.html" title="Agentry" class="md-header__button md-logo" aria-label="Agentry" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Agentry
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Offene Punkte
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark Mode aktivieren"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark Mode aktivieren" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light Mode aktivieren"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light Mode aktivieren" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Suche" placeholder="Suche" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Suche">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Teilen" aria-label="Teilen" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Zurücksetzen" aria-label="Zurücksetzen" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Suche wird initialisiert
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/torben-erz/Agentry" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    torben-erz/Agentry
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Agentry" class="md-nav__button md-logo" aria-label="Agentry" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Agentry
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/torben-erz/Agentry" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    torben-erz/Agentry
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Erste Schritte
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Erste Schritte
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/erste-beta.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Erste Beta — in 15 Minuten zum ersten Agent-PR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/installation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/erste-schritte.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Erste Schritte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/konfiguration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Konfiguration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../anwendung/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anwender-Handbuch
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anwender-Handbuch
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/konfiguration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Konfiguration im Überblick
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/cli.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI-Übersicht
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../anwendung/use-cases/index.html" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use-Cases
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Use-Cases
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/use-cases/readme-update.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use-Case: README-Hinweis ergänzen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/use-cases/bug-fix-mit-test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use-Case: Bug-Fix mit Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/use-cases/doku-luecke.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use-Case: Doku-Lücke schließen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/use-cases/refactoring-nach-review.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use-Case: Refactoring nach Review-Kommentar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/faq.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ — häufige Fragen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/troubleshooting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/vergleich.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vergleich — Agentry vs. andere AI-Code-Assistenten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anwendung/glossar.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architektur
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architektur
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architektur/overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architektur-Übersicht
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architektur/ticket-pipeline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ticket-Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architektur/ticket-source.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TicketSource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architektur/agent-backend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AgentBackend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/cli.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI-Subcommands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/service-mode.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Service-Modus (launchd / systemd)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/packaging.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Packaging &amp; Distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/multi-repo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Repo-Watch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/parallel-worker.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parallele Ticket-Verarbeitung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/pr-review-loop.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PR-Review-Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/konfig-validierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Konfigurations-Validierung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/timeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timeout pro Agent-Run
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/crash-recovery.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Crash-Recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/fehler-handling.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fehler-Handling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/logging.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/health-endpoint.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Health- &amp; Status-Endpoint
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/metrics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metriken (Prometheus)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/token-handling.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Token-Handling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/install-id.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installations-Kennung (Install-ID)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/update-notifier.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/sandbox.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sandbox für Agent-Ausführung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/codex-backend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codex-Backend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/gitlab-source.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GitLab als zweite Quelle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/webhooks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Webhooks (Echtzeit-Trigger)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/agent-routing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pro-Ticket-Agent-Routing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entwicklung
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Entwicklung
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entwicklung/code-stil.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Code-Stil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entwicklung/testing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entwicklung/neue-source.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Eine neue TicketSource hinzufügen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entwicklung/umbenennung-und-umzug.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Umbenennung &amp; Owner-Wechsel — Playbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Produkt-Strategie
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Produkt-Strategie
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="marktanalyse.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marktanalyse — Konkurrenten und ihre Modelle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vertriebsmodelle.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vertriebsmodelle — Optionen und Implikationen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="differenzierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Differenzierungs-Strategie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sales-cycle.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sales-Cycle-Realität
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="versionierung.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Versionierungs-Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offene Punkte
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="offene-punkte.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Offene Punkte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-distributions-reste-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Distributions-Reste (Engineering)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Distributions-Reste (Engineering)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-homebrew-tap-registry-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Homebrew-Tap + Registry-Push
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-sandbox-optionale-folge-strategien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Sandbox — optionale Folge-Strategien
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Sandbox — optionale Folge-Strategien">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-linuxcontainerstrategy-dockerpodman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 LinuxContainerStrategy (Docker/Podman)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-tartvmstrategy-macos-vms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 TartVMStrategy (macOS-VMs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 TartVMStrategy (macOS-VMs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apple-2-vm-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple-2-VM-Limit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternativen-wenn-das-2-vm-limit-skalierung-blockiert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternativen (wenn das 2-VM-Limit Skalierung blockiert)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-phase-5-geschaftsmodell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Phase 5 — Geschäftsmodell
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Phase 5 — Geschäftsmodell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-vertriebsmodell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Vertriebsmodell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-zielmarkt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Zielmarkt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-pricing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Pricing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-lizenz-subscription-mechanismus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Lizenz-/Subscription-Mechanismus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-doku-hosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Doku-Hosting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 Doku-Hosting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anwender-vs-maintainer-sicht-trennung-bei-stufe-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anwender vs. Maintainer — Sicht-Trennung bei Stufe 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vor-stufe-1-vorbereitungs-schritte-nicht-akut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vor-Stufe-1-Vorbereitungs-Schritte (nicht akut)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-update-mechanismus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Update-Mechanismus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-endnutzer-dokumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Endnutzer-Dokumentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-weitere-ticket-quellen-bitbucket-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Weitere Ticket-Quellen — Bitbucket / Jira
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Weitere Ticket-Quellen — Bitbucket / Jira">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-bitbucket-cloud-bitbucket-data-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Bitbucket Cloud / Bitbucket Data Center
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-jira-als-ticket-quelle-provider-ubergreifend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Jira als Ticket-Quelle (provider-übergreifend)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reihenfolge-was-muss-zuerst-entschieden-werden" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reihenfolge — was muss zuerst entschieden werden?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="phasen-historie.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phasen-Historie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referenz
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referenz
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../referenz/config.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Konfigurations-Referenz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../referenz/labels.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Label-Referenz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-distributions-reste-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Distributions-Reste (Engineering)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Distributions-Reste (Engineering)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-homebrew-tap-registry-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Homebrew-Tap + Registry-Push
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-sandbox-optionale-folge-strategien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Sandbox — optionale Folge-Strategien
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Sandbox — optionale Folge-Strategien">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-linuxcontainerstrategy-dockerpodman" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 LinuxContainerStrategy (Docker/Podman)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-tartvmstrategy-macos-vms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 TartVMStrategy (macOS-VMs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 TartVMStrategy (macOS-VMs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apple-2-vm-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple-2-VM-Limit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternativen-wenn-das-2-vm-limit-skalierung-blockiert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternativen (wenn das 2-VM-Limit Skalierung blockiert)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-phase-5-geschaftsmodell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Phase 5 — Geschäftsmodell
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Phase 5 — Geschäftsmodell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-vertriebsmodell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Vertriebsmodell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-zielmarkt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Zielmarkt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-pricing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Pricing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-lizenz-subscription-mechanismus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Lizenz-/Subscription-Mechanismus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-doku-hosting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Doku-Hosting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 Doku-Hosting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anwender-vs-maintainer-sicht-trennung-bei-stufe-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anwender vs. Maintainer — Sicht-Trennung bei Stufe 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vor-stufe-1-vorbereitungs-schritte-nicht-akut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vor-Stufe-1-Vorbereitungs-Schritte (nicht akut)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-update-mechanismus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Update-Mechanismus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-endnutzer-dokumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Endnutzer-Dokumentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-weitere-ticket-quellen-bitbucket-jira" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Weitere Ticket-Quellen — Bitbucket / Jira
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Weitere Ticket-Quellen — Bitbucket / Jira">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-bitbucket-cloud-bitbucket-data-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Bitbucket Cloud / Bitbucket Data Center
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-jira-als-ticket-quelle-provider-ubergreifend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Jira als Ticket-Quelle (provider-übergreifend)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reihenfolge-was-muss-zuerst-entschieden-werden" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reihenfolge — was muss zuerst entschieden werden?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/torben-erz/Agentry/edit/develop/docs/produkt/offene-punkte.md" title="Seite editieren" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="offene-punkte">Offene Punkte<a class="headerlink" href="#offene-punkte" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Stand: 2026-05</p>
+<p>Diese Seite listet alles, was nach Abschluss der Phasen 1–4 noch
+offen ist — getrennt nach <strong>Engineering-Resten</strong>,
+<strong>Phase 5 (Geschäftsmodell)</strong> und <strong>Blocker-Entscheidungen</strong>. Für
+jeden Punkt: was es ist, <strong>warum noch nicht begonnen</strong> wurde, und
+<strong>was entschieden werden muss</strong>, damit die Arbeit losgehen kann.</p>
+<p>Engineering-Phasen 1–4 sind komplett — Roadmap-Snapshot siehe
+<a href="../index.html#status">Status auf der Startseite</a>, Detail-Historie
+in <code>CLAUDE.md</code>.</p>
+</div>
+<h2 id="1-distributions-reste-engineering">1. Distributions-Reste (Engineering)<a class="headerlink" href="#1-distributions-reste-engineering" title="Permanent link">&para;</a></h2>
+<p>Phase 4 ist abgeschlossen, aber zwei Distributions-Schritte liegen
+bewusst still und warten auf eine Vertriebs-Entscheidung.</p>
+<h3 id="11-homebrew-tap-registry-push">1.1 Homebrew-Tap + Registry-Push<a class="headerlink" href="#11-homebrew-tap-registry-push" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td>Homebrew-Tap + Distribution-Repo: ✅ erledigt (Phase 4.26 + 4.27). Bei jedem <code>v*</code>-Tag-Push landen signierte Binaries automatisch in <code>torben-erz/agentry-dist</code> und die Formula in <code>torben-erz/homebrew-agentry</code> wird aktualisiert. Offen: nur noch der Push des Docker-Images in eine öffentliche Registry (GHCR, Docker Hub).</td>
+</tr>
+<tr>
+<td><strong>Was ist da</strong></td>
+<td>Formula-Template <code>packaging/homebrew/agentry.rb</code> (Binary-Distribution mit <code>on_macos</code>/<code>on_linux</code>-Blocks), Multi-Stage-<code>Dockerfile</code>, <code>docker.yml</code>-Smoke-Test, vollständiger Release-Workflow mit Cross-Repo-Upload + Tap-Auto-Update (Phase 4.27), Fine-grained PAT <code>DIST_TOKEN</code> im <code>release</code>-Environment, beide MIT-lizenzierten öffentlichen Repos mit READMEs.</td>
+</tr>
+<tr>
+<td><strong>Warum Docker-Registry-Push noch nicht aktiviert</strong></td>
+<td>Public-Registry-Push ist ein eigenes Distributions-Modell (Container-Workloads), das beim Closed-Beta-Start keinen konkreten Tester-Wunsch hat. Sobald jemand Agentry in Docker laufen lassen will, wird der <code>docker.yml</code>-Workflow um einen <code>docker push ghcr.io/torben-erz/agentry:&lt;tag&gt;</code>-Step erweitert — Auth läuft analog zum Tap über <code>DIST_TOKEN</code> oder ein eigenes GHCR-Token.</td>
+</tr>
+<tr>
+<td><strong>Was zu tun</strong></td>
+<td>Nur noch Docker-Registry-Push, wenn Container-Distribution für Beta-Tester relevant wird. Bis dahin: nichts. Teil des Wegs zu <a href="vertriebsmodelle.html#klein-anfangen-stufenplan">Stufe 1 im Stufenplan</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-sandbox-optionale-folge-strategien">2. Sandbox — optionale Folge-Strategien<a class="headerlink" href="#2-sandbox-optionale-folge-strategien" title="Permanent link">&para;</a></h2>
+<p>Die Sandbox-Plugin-Architektur (Phase 2.4a) trägt die folgenden
+Strategien <strong>architekturell schon</strong> — die Implementierung wartet auf
+einen konkreten Kunden-Bedarf, statt sie spekulativ vorzubauen.</p>
+<h3 id="21-linuxcontainerstrategy-dockerpodman">2.1 <code>LinuxContainerStrategy</code> (Docker/Podman)<a class="headerlink" href="#21-linuxcontainerstrategy-dockerpodman" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td>Vollwertiger Container statt <code>bwrap</code>-Namespaces: eigenes Filesystem, <strong>Netz-Namespace</strong> (statt Layer-7-Firewall extern), Resource-Limits (CPU/Memory). Ruft <code>podman run …</code> oder <code>docker run …</code> mit Capabilities-Drop und Volume-Mount für den Workspace.</td>
+</tr>
+<tr>
+<td><strong>Was ist da</strong></td>
+<td><code>SandboxStrategy</code>-Protocol + <code>SandboxRouter</code> (Phase 2.4a) tragen beliebige Strategien. <code>LinuxBwrapStrategy</code> (Phase 2.4b) als Referenz-Implementierung für „leichte" Isolation.</td>
+</tr>
+<tr>
+<td><strong>Warum nicht begonnen</strong></td>
+<td><code>bwrap</code> deckt aktuell den Threat-Model-Sweet-Spot ab (Filesystem-Isolation, PID/IPC-Namespaces). Ein voller Container kostet <strong>mehr Startzeit pro Ticket</strong> (~1–2 s vs. ~50 ms) und braucht eine Container-Runtime auf dem Host. Für Single-Operator-Setups (heutige Annahme) ist das Overkill; für <strong>regulierte Mehrkunden-Workloads</strong> (FinTech, Health) wäre es Pflicht.</td>
+</tr>
+<tr>
+<td><strong>Was zu entscheiden</strong></td>
+<td>Zielmarkt (siehe <a href="#32-zielmarkt">3.2</a>) — sobald ein Tier-3-Kunde mit Compliance-Anforderung in Sicht ist, hat die Implementierung Priorität. Vorher reine Spekulation.</td>
+</tr>
+<tr>
+<td><strong>Brücke auf macOS-Host</strong></td>
+<td>Über Lima oder Podman-Machine laufen Linux-Container auch auf Apple-Silicon-Macs — fällt nicht unter macOS-SLA, deshalb <strong>kein 2-VM-Limit</strong> (im Gegensatz zu nativen macOS-VMs, siehe <a href="#22-tartvmstrategy-macos-vms">2.2</a>). Sinnvolle Alternative, wenn Skalierung auf Mac-Hosts gewünscht ist und die Agent-Tools als Linux-Binary laufen.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-tartvmstrategy-macos-vms">2.2 <code>TartVMStrategy</code> (macOS-VMs)<a class="headerlink" href="#22-tartvmstrategy-macos-vms" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td>Echte macOS-Virtualisierung via <a href="https://github.com/cirruslabs/tart">Tart</a> (Apple Silicon). Jedes Ticket läuft in einer geklonten VM aus einem Base-Image, am Ende wegworfen.</td>
+</tr>
+<tr>
+<td><strong>Was ist da</strong></td>
+<td>Same as 2.1 — Plugin-Architektur ist bereit.</td>
+</tr>
+<tr>
+<td><strong>Warum nicht begonnen</strong></td>
+<td>VM-Snapshot-Clone ist signifikant langsamer (5–15 s pro Ticket-Start) und braucht eine vorbereitete Base-VM mit Xcode, <code>claude</code>/<code>codex</code> etc. — das ist <strong>Apple-Build-Infrastruktur-Niveau</strong> (vergleichbar mit Cirrus, BuildKite-macOS-Agents). Sinnvoll nur für Kunden mit iOS/macOS-Apps, die einen unkompromittierbar isolierten Builder brauchen.</td>
+</tr>
+<tr>
+<td><strong>Was zu entscheiden</strong></td>
+<td>Gleicher Zielmarkt-Trigger wie 2.1. Zusätzlich: Apple-2-VM-Limit (siehe unten) muss zur Skalierbarkeits-Geschichte und zum Pricing passen.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="apple-2-vm-limit">Apple-2-VM-Limit<a class="headerlink" href="#apple-2-vm-limit" title="Permanent link">&para;</a></h4>
+<p>Apples macOS-SLA (Software License Agreement) erlaubt auf
+Apple-Silicon-Hardware <strong>maximal zwei macOS-VM-Instanzen gleichzeitig
+pro physischem Host</strong> zusätzlich zum Host-OS. Wortlaut sinngemäß: „up to
+two (2) additional copies or instances of the Apple Software ... on a
+virtual operating system". Die Klausel ist scharf — Tart, Cirruslabs,
+MacStadium und AWS EC2 mac.metal respektieren sie alle.</p>
+<p><strong>Praktische Konsequenz für Agentry:</strong> Für 10 parallele Mac-Tickets
+braucht man 5 physische Mac-Hosts. Pro Worker-Pool skaliert die
+Hardware-Rechnung also linear, nicht durch Hochfahren von mehr VMs auf
+demselben Host.</p>
+<h4 id="alternativen-wenn-das-2-vm-limit-skalierung-blockiert">Alternativen (wenn das 2-VM-Limit Skalierung blockiert)<a class="headerlink" href="#alternativen-wenn-das-2-vm-limit-skalierung-blockiert" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Ansatz</th>
+<th>Lizenz-Limit</th>
+<th>Use-Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>MacOSSandboxStrategy</code></strong> (heute live, Phase 2.4c)</td>
+<td>keins (Prozess-Isolation)</td>
+<td>Default — <code>sandbox-exec</code> mit FS-Allowlist, ~50 ms Startup statt 5–15 s. Reicht für 99 % der Bedrohungsmodelle; schwächer als VM (gemeinsamer Kernel, kein Netz-Namespace).</td>
+</tr>
+<tr>
+<td><strong>Lima / <code>vz</code>-Framework / Podman-Machine</strong> (Linux-VMs auf Mac-Host)</td>
+<td>keins — Linux fällt nicht unter macOS-SLA</td>
+<td>Wenn Agent-Tools als Linux-Binary laufen (<code>claude</code>/<code>codex</code> haben Linux-Builds), macht den Mac effektiv zum Linux-Builder. Beliebig viele VMs pro Host.</td>
+</tr>
+<tr>
+<td><strong><code>LinuxContainerStrategy</code></strong> (offen, <a href="#21-linuxcontainerstrategy-dockerpodman">2.1</a>)</td>
+<td>keins (Linux-Container)</td>
+<td>Auf Linux-Hosts trivial; auf Mac-Host indirekt über Lima/Podman-Machine. Volles Netz-Namespace + Cgroups.</td>
+</tr>
+<tr>
+<td><strong>Mehr Mac-Hardware</strong></td>
+<td>bleibt gleich (2 VMs/Host)</td>
+<td>Skaliert wirtschaftlich nicht — Mac-Mini-Pool wird schnell teurer als ein gleichwertiges Linux-Cluster.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Empfehlung:</strong> Tart-VM ist nur dann der richtige Ansatz, wenn ein
+Kunde gleichzeitig <strong>native macOS-Builds</strong> (Xcode, iOS-Signing) und
+<strong>starke Isolation</strong> (Compliance, Multi-Tenant-Mac-Pool) braucht. Für
+reine Code-Generierung mit Linux-fähigen Agent-Backends ist eine
+Lima-VM + <code>linux-container</code> deutlich günstiger zu skalieren.</p>
+<h2 id="3-phase-5-geschaftsmodell">3. Phase 5 — Geschäftsmodell<a class="headerlink" href="#3-phase-5-geschaftsmodell" title="Permanent link">&para;</a></h2>
+<p>Phase 5 ist <strong>teilweise vorgespurt</strong>: Der Vertriebs-<strong>Pfad</strong> ist
+vorläufig beschlossen (Open-Core + On-Prem-Subscription, siehe 3.1),
+aber Pricing-Höhe, Zielmarkt-Fokus und Lizenz-Mechanik bleiben innerhalb
+dieses Pfads offen — auf Beta-Feedback wartend.</p>
+<h3 id="31-vertriebsmodell">3.1 Vertriebsmodell<a class="headerlink" href="#31-vertriebsmodell" title="Permanent link">&para;</a></h3>
+<p><strong>Vorläufig beschlossen (Stand 2026-05-14):</strong> <strong>Open-Core + On-Prem-
+Subscription</strong>, mit gradueller Erweiterung — siehe
+<a href="vertriebsmodelle.html#klein-anfangen-stufenplan">Stufenplan</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Stufe</th>
+<th>Form</th>
+<th>Auslöser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pre-1</strong> (aktiv)</td>
+<td>Closed-Beta, Source privat, Binary-Distribution über Homebrew-Tap</td>
+<td>— heute</td>
+</tr>
+<tr>
+<td><strong>Stufe 1</strong></td>
+<td>Source-Repo öffentlich, MIT/Apache-2.0, gleicher Distribution-Pfad</td>
+<td>Beta-Feedback positiv</td>
+</tr>
+<tr>
+<td><strong>Stufe 2</strong></td>
+<td>Open-Core: Premium-Repo + offline-signierte Lizenz</td>
+<td>Erster zahlbereiter Kunde</td>
+</tr>
+<tr>
+<td><strong>Stufe 3</strong></td>
+<td>Hybrid: optionale Cloud-Komponente (Webhook-Forwarder, Multi-Daemon-Dashboard)</td>
+<td>Konkretes Cloud-mehrwert-Feature gewünscht</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Was im Pfad offen ist:</strong></p>
+<ul>
+<li><strong>Zeitpunkt für Stufe 1</strong> — abhängig von Beta-Feedback und Vertrauen,
+  dass die OSS-Linie sauber ist</li>
+<li><strong>Pricing innerhalb Open-Core</strong> — siehe <a href="#33-pricing">3.3 Pricing</a></li>
+<li><strong>Lizenz-Mechanik</strong> — Default-Erwartung: offline-signiertes Token,
+  Online-Verifikation nur bei Hybrid Stufe 3 — siehe <a href="#34-lizenz-subscription-mechanismus">3.4</a></li>
+<li><strong>Cloud-Komponente</strong> — welches Feature rechtfertigt Stufe 3?
+  Webhook-Forwarder ist der naheliegende Kandidat, aber kein Kunde
+  hat es explizit verlangt.</li>
+</ul>
+<p><strong>Was bewusst nicht im Pfad ist:</strong></p>
+<ul>
+<li><strong>Reines SaaS</strong> — Code-/Token-Zugriff durch uns ist für Enterprise-
+  Bedenken zu sensibel; Plattform-Riesen (GitHub, Anthropic) würden
+  uns auf der Achse ohnehin überfahren.</li>
+<li><strong>Reines Closed-Source-On-Prem</strong> — verbrennt Adoption durch
+  Indie-Devs und Mittelstand, die OSS-Vertrauen vor Kauf brauchen.</li>
+</ul>
+<p>Markt-Grundlage und Detail-Diskussion:
+<a href="vertriebsmodelle.html"><code>vertriebsmodelle.md</code></a>.</p>
+<h3 id="32-zielmarkt">3.2 Zielmarkt<a class="headerlink" href="#32-zielmarkt" title="Permanent link">&para;</a></h3>
+<p><strong>Optionen</strong> (Tier-Logik aus <a href="sales-cycle.html"><code>sales-cycle.md</code></a>):</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Definition</th>
+<th>Pro</th>
+<th>Contra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tier 1–2</strong></td>
+<td>Indie-Dev, kleines Team</td>
+<td>Schnelle Adoption, einfache Sales</td>
+<td>Wenig Zahlungsbereitschaft, Open-Source-Wettbewerb</td>
+</tr>
+<tr>
+<td><strong>Tier 3</strong></td>
+<td>Mittelstand mit CI/CD-Infrastruktur</td>
+<td>Bezahlte Tools normal, schnellere Deals als Enterprise</td>
+<td>Compliance/Sandbox-Anforderungen werden Pflicht</td>
+</tr>
+<tr>
+<td><strong>Tier 4</strong></td>
+<td>Enterprise mit Security-Review</td>
+<td>Hohe Deal-Größen</td>
+<td>6–18 Monate Sales-Cycle, eigene Vorbedingungen (SSO, SOC2, …)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Warum nicht entschieden:</strong> Tier-Mix bestimmt das Pricing-Modell, die Sandbox-Roadmap (Container/Tart bei Tier 3+ Pflicht), die Doku-Tiefe (Tier 1 reicht README, Tier 4 braucht Compliance-Mappings). Aktuelle Sales-Cycle-Hypothese ist A→B→C (siehe Strategie-Doc), aber <strong>noch nicht bestätigt</strong>.</p>
+<p><strong>Verknüpfte offene Folgearbeit:</strong></p>
+<ul>
+<li>Container/Tart-Sandbox (Abschnitt <a href="#2-sandbox-optionale-folge-strategien">2</a>) — Tier 3+ macht das zur Pflicht.</li>
+<li>Endnutzer-Doku (3.6) — Detaillierungsgrad hängt vom Tier ab.</li>
+</ul>
+<h3 id="33-pricing">3.3 Pricing<a class="headerlink" href="#33-pricing" title="Permanent link">&para;</a></h3>
+<p><strong>Innerhalb des Open-Core-Pfads</strong> (<a href="#31-vertriebsmodell">3.1</a>) bleibt
+die konkrete Pricing-Mechanik offen:</p>
+<ul>
+<li><strong>Subscription pro Daemon-Instanz</strong> — einfach, gut zu kommunizieren
+  (z. B. 49 €/Monat pro Daemon). Naheliegender Default-Kandidat.</li>
+<li><strong>Tier-basiert</strong> (Free / Team / Enterprise) — kongruent zu GitLab/
+  Sentry-Modell, ermöglicht Premium-Feature-Bündelung.</li>
+<li><strong>Verbrauchsabhängig</strong> (Tickets/Monat) — passt schlecht zum
+  On-Prem-Setup, weil Metering-Trust-Frage offen ist; eher Stufe 3 mit
+  Cloud-Component.</li>
+</ul>
+<p><strong>Was noch zu klären ist:</strong></p>
+<ul>
+<li>Pricing-<strong>Höhe</strong> — nur durch Beta-Feedback und erste Sales-Gespräche
+  zu beantworten</li>
+<li>Konkrete Premium-Feature-Bündelung — Kandidaten in
+  <a href="differenzierung.html">Differenzierung</a> gelistet</li>
+<li>Free-Tier-Umfang — wie viele Daemon-Instanzen / Repos darf der OSS-
+  Kern haben?</li>
+</ul>
+<h3 id="34-lizenz-subscription-mechanismus">3.4 Lizenz-/Subscription-Mechanismus<a class="headerlink" href="#34-lizenz-subscription-mechanismus" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td>Daemon prüft beim Start (und periodisch) eine Lizenz — Default-Erwartung im Open-Core-Pfad: <strong>offline-signiertes Token</strong> (Ed25519-Public-Key im Binary einkompiliert). Online-Verifikation kommt erst mit Hybrid-Stufe 3 als optionale Variante.</td>
+</tr>
+<tr>
+<td><strong>Was ist da</strong></td>
+<td><a href="../features/install-id.html"><code>InstallID</code></a> erzeugt seit 2026-05-11 eine stabile, anonyme UUID pro Installation in <code>~/.agentry/install.id</code> (0600). Sie ist <strong>bewusst</strong> schon im Daemon, damit Lizenz-Bindung später ohne Migration funktioniert — eine einmal verteilte ID kann der Lizenz-Server wiedererkennen. <code>TokenProvider</code>-Pattern (5 Quellen austauschbar) lässt eine Lizenz-Quelle ohne Umbau dazukommen.</td>
+</tr>
+<tr>
+<td><strong>Warum noch nicht begonnen</strong></td>
+<td>Auslöser für die Implementierung ist der erste zahlbereite Kunde (Stufe-2-Trigger laut <a href="vertriebsmodelle.html#klein-anfangen-stufenplan">Stufenplan</a>). Vorher gäbe es keinen Empfänger für die Lizenz — und Closed-Source-Plumbing im OSS-Kern verbrennt Vertrauen.</td>
+</tr>
+<tr>
+<td><strong>Was zu klären</strong></td>
+<td>Premium-Feature-Schnittlinie (welche Features greifen auf den Lizenz-Check zu?), Token-Format-Details (Felder + Versionierung), Grace-Period bei abgelaufener Lizenz.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35-doku-hosting">3.5 Doku-Hosting<a class="headerlink" href="#35-doku-hosting" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td>Öffentlich abrufbare Doku-Site.</td>
+</tr>
+<tr>
+<td><strong>Aktueller Stand (ab Phase 4.40)</strong></td>
+<td>Provisorisch <strong>live</strong> auf <code>https://torben-erz.github.io/agentry-dist/</code> — der Doku-Build wird bei <code>push</code> auf <code>develop</code> auf den <code>gh-pages</code>-Branch des bereits öffentlichen <code>torben-erz/agentry-dist</code>-Repos (MIT, hostet die signierten Binary-Tarballs) gepusht und von dortigem GitHub Pages ausgeliefert. Damit muss das Source-Repo nicht öffentlich werden, um den Tester-Pfad „kurz in die Doku schauen" sinnvoll zu machen.</td>
+</tr>
+<tr>
+<td><strong>Plan im Open-Core-Pfad</strong></td>
+<td>Mit <a href="vertriebsmodelle.html#klein-anfangen-stufenplan">Stufe 1</a> (Source-Repo öffentlich) → Deploy auf das Source-Repo selbst umstellen (<code>torben-erz.github.io/Agentry/</code>) und die <code>agentry-dist@gh-pages</code>-Krücke zurückbauen. Bis dahin bleibt der Offline-Fallback via <code>/agentry-doku</code>-Skill und <code>scripts/build-beta-handout.py</code> für Tester nutzbar.</td>
+</tr>
+<tr>
+<td><strong>Warum nicht direkt aus Source-Repo</strong></td>
+<td>Source-Repo ist während der Closed-Beta privat. <strong>GitHub Pages erzwingt private Sichtbarkeit nur auf GitHub Enterprise Cloud</strong> — Pro/Team würden die Pages öffentlich machen, auch bei privatem Repo. Über das ohnehin schon öffentliche Dist-Repo zu deployen, umgeht das Problem ohne neues Hosting-Stück und ohne Enterprise-Cloud-Subscription.</td>
+</tr>
+<tr>
+<td><strong>Was zu klären</strong></td>
+<td>Domain (z. B. <code>agentry.dev</code> oder Subdomain <code>docs.agentry.dev</code>?) + URL-Stil (<code>use_directory_urls: true</code> einschalten, sobald der <code>file://</code>-Use-Case aus dem CI-Artefakt nicht mehr relevant ist).</td>
+</tr>
+</tbody>
+</table>
+<h4 id="anwender-vs-maintainer-sicht-trennung-bei-stufe-1">Anwender vs. Maintainer — Sicht-Trennung bei Stufe 1<a class="headerlink" href="#anwender-vs-maintainer-sicht-trennung-bei-stufe-1" title="Permanent link">&para;</a></h4>
+<p>Mit dem Anwender-Handbuch (<code>docs/anwendung/</code>, Phase 5.1+) ist die
+Doku-Site strukturell zweigeteilt: Anwender-Bereich (<code>getting-started/</code>
++ <code>anwendung/</code>) und Maintainer-/Entwickler-Bereich (<code>entwicklung/</code>,
+<code>features/</code>, <code>architektur/</code>, <code>produkt/</code>, <code>referenz/</code>). Heute physisch
+beides in einer Site — Tester sehen aber nichts davon, weil das
+Source-Repo privat ist und nicht deployed wird.</p>
+<p>Mit Stufe 1 (Source öffentlich) sind drei Trennungs-Varianten möglich:</p>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>Beschreibung</th>
+<th>Aufwand</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>Eine Site, alle Sektionen sichtbar inkl. <code>produkt/</code>-Strategie</td>
+<td>minimal</td>
+<td>❌ verworfen — <code>produkt/</code> hat interne Strategie-Notizen, nichts für Public</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>Eine Site, <code>docs/produkt/</code> (und ggf. <code>docs/entwicklung/</code>) per zweitem mkdocs-Config oder CI-Filter aus dem Public-Build raus</td>
+<td>moderat — ein Config-File mehr</td>
+<td>✅ vorläufig beschlossen für Stufe 1</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>Zwei separate Sites mit eigenen URLs (z. B. <code>docs.agentry.dev</code> öffentlich, <code>internal.agentry.dev</code> mit Auth)</td>
+<td>hoch — doppelter Build, doppeltes Hosting</td>
+<td>⏭️ Folge-Option, falls B nicht reicht</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stand 2026-05-15 (Beta läuft weiter):</strong> Variante B ist vorgemerkt,
+nicht akut umgesetzt — Tester sehen ohnehin nur das Beta-Handout, nicht
+die Site. Die drei kleinen Vorbereitungs-Schritte unten machen den
+Stufe-1-Übergang aber leichter, sobald er kommt.</p>
+<h4 id="vor-stufe-1-vorbereitungs-schritte-nicht-akut">Vor-Stufe-1-Vorbereitungs-Schritte (nicht akut)<a class="headerlink" href="#vor-stufe-1-vorbereitungs-schritte-nicht-akut" title="Permanent link">&para;</a></h4>
+<p>Drei kleine Schritte, die heute nicht zwingend sind, aber den Schritt
+zu Stufe 1 + Variante B vereinfachen:</p>
+<ol>
+<li><strong>Maintainer-internes klar markieren.</strong> Konvention: jede Seite mit
+   interner Strategie kriegt einen <code>!!! warning "Maintainer-intern"</code>-
+   Block oben. Macht den Filter-Pass für Variante B (welche Dateien
+   raus aus der Public-Nav?) trivial — eine <code>grep</code>-Regel reicht.
+   Aktuell haben viele <code>produkt/</code>-Seiten schon Snapshot-Warnings, aber
+   nicht alle und nicht im selben Stil.</li>
+<li><strong>Cross-Link-Hygiene Anwender → Maintainer.</strong> Aktuell verweisen
+   einige Anwender-Seiten auf <code>produkt/</code>-Seiten (z. B.
+   <code>anwendung/vergleich.md</code> → <code>produkt/differenzierung.md</code>). Wenn
+   <code>produkt/</code> mal nicht im Public-Build ist, sind das tote Links.
+   Lösung: in Anwender-Seiten entweder nur auf das wirklich Nötige aus
+   <code>produkt/</code> verweisen oder die Anwender-relevanten Strategie-Inhalte
+   (Stufenplan etc.) in <code>anwendung/</code> spiegeln.</li>
+<li><strong>CI-Workflow-Skelett vorbereiten.</strong> Ein zweites mkdocs-Config-File
+   (<code>mkdocs.public.yml</code>?) mit reduzierter <code>nav</code> als kommentiertes
+   Skelett im Repo, damit beim Stufe-1-Trigger nur noch der Deploy-
+   Step in <code>.github/workflows/docs.yml</code> aktiviert werden muss.</li>
+</ol>
+<p>Diese drei Schritte sind dokumentiert, aber nicht eingeplant — werden
+gemacht, sobald Beta-Feedback positiv ist und Stufe 1 konkret bevorsteht.</p>
+<h3 id="36-update-mechanismus">3.6 Update-Mechanismus<a class="headerlink" href="#36-update-mechanismus" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td>Daemon erkennt, dass eine neuere Version verfügbar ist. Zwei Bauformen: <strong>Notifier</strong> (nur Hinweis im Log/Status, User aktualisiert selbst) oder <strong>Auto-Update</strong> (Daemon lädt + ersetzt sich selbst).</td>
+</tr>
+<tr>
+<td><strong>Stand</strong></td>
+<td><strong>Notifier-Hälfte ist live</strong> (Phase 4.22/4.26): Daemon prüft alle 24 h gegen <code>agentry-dist</code> und loggt WARN bei neuerer Version; <code>agentry update</code>-Subcommand für manuellen Trigger. Update-Pfad bei Homebrew-Installation: <code>brew upgrade agentry</code>. <strong>Damit ist der Beta-Bedarf gedeckt.</strong></td>
+</tr>
+<tr>
+<td><strong>Warum Auto-Update noch nicht</strong></td>
+<td>Auto-Update auf einem Service-Daemon mit elevated Permissions (<code>launchd</code>/<code>systemd</code>) ist sicherheits-sensitiv — falsches Binary nachgeladen = Supply-Chain-Compromise. Aktuell deckt der Package-Manager-Pfad (Homebrew) das ohnehin ab. Direkter Auto-Update-Mechanismus käme erst, wenn ein Kunde Homebrew nicht nutzen kann/will und trotzdem automatische Updates braucht.</td>
+</tr>
+<tr>
+<td><strong>Was zu klären, wenn relevant</strong></td>
+<td>Update-Channel für non-Homebrew-Pfad (eigener Update-Server vs. signierte Manifest-Datei in <code>agentry-dist</code>), Replace-In-Place-Detail (launchctl/systemd-Restart-Choreografie).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="37-endnutzer-dokumentation">3.7 Endnutzer-Dokumentation<a class="headerlink" href="#37-endnutzer-dokumentation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td>Doku für <strong>Käufer</strong>, nicht für Entwickler. Onboarding-Flow, Use-Case-Walkthroughs, Troubleshooting, FAQ, ROI-Argumentation, Vergleichs-Tabellen zu Devin/Aider/Copilot.</td>
+</tr>
+<tr>
+<td><strong>Was ist da</strong></td>
+<td>Heute: <code>README.md</code>, <code>CLAUDE.md</code> (entwicklungs-zentriert), <code>docs/</code> (technisch). Die Inhalte sind ausführlich, aber im <strong>Entwickler-Register</strong> — kein Onboarding-Funnel, keine Vertriebs-Argumente, keine Screenshots.</td>
+</tr>
+<tr>
+<td><strong>Warum nicht begonnen</strong></td>
+<td>Endnutzer-Doku hängt fundamental am <strong>Zielmarkt</strong> (<a href="#32-zielmarkt">3.2</a>) — Tier-1-Indies brauchen einen 10-Minuten-Hello-World, Tier-4-Enterprise will Security-Whitepapers, Compliance-Mappings, Architecture-Decision-Records. Wir würden den falschen Ton treffen, wenn wir jetzt für „den Käufer" schreiben, ohne zu wissen, wer das ist.</td>
+</tr>
+<tr>
+<td><strong>Was zu entscheiden</strong></td>
+<td>Zielmarkt (3.2) + Pricing (3.3) — sobald klar, kann eine erste End­nutzer-Linie geschrieben werden (eine Tier-Schiene zuerst, weitere folgen).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-weitere-ticket-quellen-bitbucket-jira">4. Weitere Ticket-Quellen — Bitbucket / Jira<a class="headerlink" href="#4-weitere-ticket-quellen-bitbucket-jira" title="Permanent link">&para;</a></h2>
+<p>Mit Phase 3.10 (GitLab) und Phase 4.30 (GitHub Enterprise Server) deckt
+Agentry die GitHub- und GitLab-Familie ab. Bitbucket bzw. Jira wären
+die nächsten naheliegenden Quellen, sind aber kein 1:1-Port von GitLab.</p>
+<h3 id="41-bitbucket-cloud-bitbucket-data-center">4.1 Bitbucket Cloud / Bitbucket Data Center<a class="headerlink" href="#41-bitbucket-cloud-bitbucket-data-center" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td><code>BitbucketCloudClient</code> (gegen <code>api.bitbucket.org/2.0/</code>) und <code>BitbucketServerClient</code> (gegen <code>&lt;host&gt;/rest/api/1.0/</code>) als zwei separate Clients hinter einem gemeinsamen <code>TicketSource</code>/<code>ResultReporter</code>-Protocol-Paar. Beide REST-APIs sind unterschiedlich genug, dass ein einzelner Client nicht reicht.</td>
+</tr>
+<tr>
+<td><strong>Was ist da</strong></td>
+<td><code>TicketSource</code>/<code>AgentBackend</code>/<code>ResultReporter</code>-Protocols sind plattform-agnostisch — die GitLab-Implementierung (Phase 3.10) zeigt, wie ein zweiter Provider geschnitten wird. Phase 4.30 hat das <code>host</code>-Feld provider-agnostisch gemacht; eine Bitbucket-Server-Instanz würde denselben Mechanismus nutzen.</td>
+</tr>
+<tr>
+<td><strong>Warum nicht begonnen</strong></td>
+<td>Drei harte Punkte: (1) <strong>Zwei APIs statt eine</strong> — Bitbucket Cloud und Data Center teilen den Namen, aber nicht das REST-Schema. (2) <strong>Kein Label-System auf Issues</strong> in Bitbucket Cloud (Issue-Tracker ist faktisch deprecated, Atlassian pusht Jira). Damit fehlt das Trigger-Vehikel <code>agent-task</code> ohne Workaround (z. B. Komponenten oder Mentions). (3) <strong>Keine offizielle CLI</strong> auf gh/glab-Niveau — <code>ResultReporter</code> und Credential-Helper müssten direkt gegen die API gebaut werden, ohne den <code>gh auth setup-git</code>-Komfort.</td>
+</tr>
+<tr>
+<td><strong>Was zu entscheiden</strong></td>
+<td>Bedarf zuerst: gibt es einen Beta-Tester / Tier-2–3-Kunden, der <strong>explizit</strong> Bitbucket im Stack hat und nicht auf GitHub/GitLab migrieren will? Wenn ja: Cloud oder Server zuerst? Cloud ist API-mäßig einfacher, hat aber das Issue-Tracker-Problem; Server ist eigenständig mit Labels, aber deutlich mehr Code.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-jira-als-ticket-quelle-provider-ubergreifend">4.2 Jira als Ticket-Quelle (provider-übergreifend)<a class="headerlink" href="#42-jira-als-ticket-quelle-provider-ubergreifend" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspekt</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Was</strong></td>
+<td><code>JiraTicketSource</code> gegen Jira Cloud REST API v3 (oder Data Center v2). Ein Jira-Ticket triggert einen Lauf, der Code in einem <strong>separat konfigurierten</strong> Git-Host (GitHub/GitLab/Bitbucket) committet. Issue-Tracker und Code-Host sind entkoppelt.</td>
+</tr>
+<tr>
+<td><strong>Was ist da</strong></td>
+<td><code>Ticket</code>-Domänenmodell ist explizit plattform-neutral. Heute ist Ticket-Quelle und Reporter aber an denselben Provider gebunden — das müsste aufgebrochen werden in „TicketSource bestimmt <strong>woher</strong>, ResultReporter bestimmt <strong>wohin</strong>".</td>
+</tr>
+<tr>
+<td><strong>Warum nicht begonnen</strong></td>
+<td>Architektur-Änderung am Provider-Modell + Mapping Jira-Workflow ↔ Agentry-Status-Labels (<code>agent:in-progress</code>/<code>done</code>/<code>failed</code>). Jira hat zwar Labels, aber das eigentliche Status-Vehikel ist der Workflow (Transitions). Das ist mehr Konfigurations-Arbeit pro Kunde als bei GitHub/GitLab.</td>
+</tr>
+<tr>
+<td><strong>Warum trotzdem interessant</strong></td>
+<td>Im Atlassian-Stack (Bitbucket + Jira) ist Jira faktisch die einzige Issue-Tracker-Realität. Eine <code>JiraTicketSource</code> würde gleichzeitig den Atlassian-Markt erschließen — kombinierbar mit GitHub-, GitLab- oder (später) Bitbucket-Reporting.</td>
+</tr>
+<tr>
+<td><strong>Was zu entscheiden</strong></td>
+<td>Strategisch vor Bitbucket: wenn ein Bitbucket-Kunde realistisch sowieso Jira nutzt, ist Jira der Hebel mit größerer Reichweite. Trigger: erster Atlassian-Stack-Kunde im Beta-Pool.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reihenfolge-was-muss-zuerst-entschieden-werden">Reihenfolge — was muss zuerst entschieden werden?<a class="headerlink" href="#reihenfolge-was-muss-zuerst-entschieden-werden" title="Permanent link">&para;</a></h2>
+<p>Der Vertriebs-<strong>Pfad</strong> ist beschlossen (<a href="#31-vertriebsmodell">3.1</a>);
+was bleibt, sind Detail-Achsen innerhalb des Pfads.</p>
+<pre class="mermaid"><code>flowchart TD
+    VM["✅ Vertriebs-Pfad&lt;br/&gt;(Open-Core + On-Prem)"]
+    ZM[Zielmarkt-Fokus&lt;br/&gt;3.2]
+    PR[Pricing-Höhe&lt;br/&gt;3.3]
+    LI[Lizenz-Mechanik-Details&lt;br/&gt;3.4]
+    DH[Doku-Hosting&lt;br/&gt;3.5]
+    TR[Tap + Registry&lt;br/&gt;1.1]
+    EN[Endnutzer-Doku&lt;br/&gt;3.7]
+    UM[Update-Mechanismus&lt;br/&gt;3.6]
+    CN["Container/Tart&lt;br/&gt;Sandbox&lt;br/&gt;2.1 / 2.2"]
+
+    VM -.-&gt;|Stufe 1 öffnet| DH
+    ZM --&gt; PR
+    ZM --&gt; EN
+    ZM --&gt; CN
+    PR --&gt; LI
+    VM -.-&gt;|✅ erledigt mit| TR
+    VM -.-&gt;|✅ Notifier live| UM</code></pre>
+<p><strong>Was die nächsten Entscheidungen entblocken werden:</strong></p>
+<ol>
+<li><strong>Beta-Feedback</strong> — entblockt Zeitpunkt für Stufe 1 (Source öffentlich)
+   und damit den Doku-Hosting-Umzug aufs Source-Repo (Mechanik steht
+   provisorisch über <code>agentry-dist@gh-pages</code>, Phase 4.40) sowie die
+   Tap-Discovery (Marketing-Sichtbarkeit, nicht Mechanik — die steht).</li>
+<li><strong>Zielmarkt-Fokus</strong> (welcher Tier-Schwerpunkt nach Beta) — entblockt
+   Pricing-Höhe, Endnutzer-Doku-Tiefe, Sandbox-Roadmap (Container/Tart
+   nur bei Tier-3+).</li>
+<li><strong>Erster zahlbereiter Kunde</strong> — entblockt Lizenz-Mechanik-
+   Implementierung (Stufe 2).</li>
+</ol>
+<p>Markt-Snapshot und Hypothesen dazu liegen in
+<a href="marktanalyse.html"><code>marktanalyse.md</code></a>,
+<a href="vertriebsmodelle.html"><code>vertriebsmodelle.md</code></a>,
+<a href="differenzierung.html"><code>differenzierung.md</code></a> und
+<a href="sales-cycle.html"><code>sales-cycle.md</code></a>. Der Vertriebs-<strong>Pfad-Beschluss</strong>
+(Open-Core + On-Prem) steht in <code>vertriebsmodelle.md</code>; die anderen drei
+bleiben Snapshots ohne formellen Beschluss.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Zurück zum Seitenanfang
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Fußzeile" >
+        
+          
+          <a href="versionierung.html" class="md-footer__link md-footer__link--prev" aria-label="Zurück: Versionierungs-Schema">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Zurück
+              </span>
+              <div class="md-ellipsis">
+                Versionierungs-Schema
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="phasen-historie.html" class="md-footer__link md-footer__link--next" aria-label="Weiter: Phasen-Historie">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Weiter
+              </span>
+              <div class="md-ellipsis">
+                Phasen-Historie
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 NanoApes, Torben Daniel Erz
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/torben-erz/Agentry" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.action.edit", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
