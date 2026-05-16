@@ -3175,6 +3175,47 @@ vollständige Detail-Historie.</p>
   Kein Code-Change.</p>
 <h2 id="2026-05-16">2026-05-16<a class="headerlink" href="#2026-05-16" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>Phase 4.41 Beta-Handout-Generator entfernt</strong>: Folge-Schritt zu
+  Phase 4.40 (Doku-Hosting live). Das in Phase 4.28 eingeführte
+  <code>scripts/build-beta-handout.py</code> baute aus
+  <code>docs/getting-started/erste-beta.md</code> ein self-contained HTML
+  (<code>dist/beta-handout/agentry-beta-walkthrough.html</code>), das per
+  Mail/Slack an Beta-Tester verteilt wurde — Begründung damals: die
+  Doku-Site war nicht öffentlich erreichbar, weil das Source-Repo
+  privat ist und GitHub Pages daraus nur auf Enterprise Cloud privat
+  bleiben würde. Mit der Live-URL <code>agentry-dist.github.io</code> ist der
+  Mail-Anhang-Use-Case obsolet: Tester können die <code>erste-beta</code>-Seite
+  direkt im Browser lesen, und Updates an <code>erste-beta.md</code> deployen
+  automatisch über den <code>docs.yml</code>-Workflow auf <code>develop</code>-Push.
+  Aufräum-Schritte:<ul>
+<li><code>scripts/build-beta-handout.py</code> und lokales
+  <code>dist/beta-handout/</code>-Verzeichnis gelöscht (<code>dist/</code> ist
+  gitignored, das HTML war nie im Repo).</li>
+<li><code>scripts/beta-einladung.md</code> (Maintainer-Spickzettel)
+  umgestellt: Mail-Vorlage verweist statt „Anhang" auf
+  <code>https://torben-erz.github.io/agentry-dist/getting-started/erste-beta.html</code>,
+  Vor-Versende-Check ersetzt den Handout-Build-Schritt durch
+  einen <code>curl</code>-Smoke-Test, „Schnelle Repo-Links"-Tabelle bekommt
+  die Doku-URL als erste Zeile.</li>
+<li><code>CLAUDE.md</code> (Aktuell-offen-Doku-Hosting-Zeile) und
+  <code>docs/produkt/offene-punkte.md</code> §3.5 (Plan-Zelle, Stand-
+  Block) hatten beide noch „Offline-Fallback via
+  <code>build-beta-handout.py</code>" als Backup gelistet — Erwähnung
+  raus, weil der <code>/agentry-doku</code>-Skill den Offline-Fallback
+  für ungemergte Branches weiterhin abdeckt.</li>
+<li><code>docs/entwicklung/umbenennung-und-umzug.md</code> listet beim
+  hypothetischen Owner-/Produktname-Wechsel alle Stellen mit
+  <code>torben-erz</code>/<code>Agentry</code>-Hardcodings; <code>build-beta-handout.py</code>-
+  Erwähnung an zwei Stellen entfernt (Datei + „Vorsicht"-
+  Sektion).
+  Phase 4.28-Eintrag in dieser Historie bleibt bewusst stehen — das
+  Devlog dokumentiert, was es einmal gab, nicht den heutigen Stand;
+  der heutige Stand steht in <code>CLAUDE.md</code> und in den
+  Architektur-/Anwendungs-Doku-Seiten.
+  Keine Code-Änderungen am Daemon, keine Test-Auswirkung — 333 Tests
+  bleiben grün.</li>
+</ul>
+</li>
 <li><strong>Phase 4.40 Doku-Hosting provisorisch auf <code>agentry-dist@gh-pages</code></strong>:
   Beta-Tester- und Entwickler-Feedback: der bisherige Pfad (CI-
   Artefakt herunterladen, lokalen HTTP-Server starten, Browser
