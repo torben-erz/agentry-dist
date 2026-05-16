@@ -3168,7 +3168,7 @@ volle Validator-Regel-Tabelle steht in
 <li><strong><code>watch</code> fehlt oder ist leer</strong> — Pflichtschlüssel, siehe
   <a href="konfiguration.html#stufe-1-pflicht-was-du-setzen-musst">Konfiguration → Stufe 1</a></li>
 <li><strong><code>agentBackend</code> ist ein unbekannter Name</strong> — gültig sind
-  <code>"claude-code"</code> und <code>"codex"</code></li>
+  <code>"claude"</code> und <code>"codex"</code></li>
 <li><strong><code>sandbox.default</code>-Strategie kennt der Daemon nicht</strong> — gültig sind
   <code>"none"</code>, <code>"macos-sandbox"</code>, <code>"linux-bwrap"</code></li>
 <li><strong><code>tokenFile</code> zeigt auf eine Datei, die nicht existiert oder nicht
@@ -3262,7 +3262,7 @@ progress</code>, aber kein PR wurde erzeugt und keine weitere Log-Aktivität.</p
 <p>Mehr Detail: <a href="../features/crash-recovery.html">Features → Crash-Recovery</a>.</p>
 <h3 id="ticket-failt-mit-pipelinefailurephase-agentrun">Ticket failt mit <code>PipelineFailure(phase: .agentRun)</code><a class="headerlink" href="#ticket-failt-mit-pipelinefailurephase-agentrun" title="Permanent link">&para;</a></h3>
 <p><strong>Symptom:</strong> Issue bekommt <code>agent:failed</code>-Label, im PR-Kommentar steht:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Pipeline-Abbruch in Phase &#39;agentRun&#39;: Agent-Backend &#39;claude-code&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Pipeline-Abbruch in Phase &#39;agentRun&#39;: Agent-Backend &#39;claude&#39;
 </span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>endete mit Exit 1.
 </span></code></pre></div>
 <p><strong>Diagnose:</strong> Agentry loggt seit Phase 4.42 bei Non-Zero-Exit

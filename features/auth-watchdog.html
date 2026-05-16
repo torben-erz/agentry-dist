@@ -2669,7 +2669,7 @@
 
 <h1 id="auth-watchdog">Auth-Watchdog<a class="headerlink" href="#auth-watchdog" title="Permanent link">&para;</a></h1>
 <p>Agentry kann die Auth-Lage der konfigurierten Agent-Backends
-(<code>claude-code</code>, <code>codex</code>) periodisch prüfen — bevor das nächste Ticket
+(<code>claude</code>, <code>codex</code>) periodisch prüfen — bevor das nächste Ticket
 hereinkommt und auf eine kaputte OAuth-Session trifft. <strong>Default
 ausgeschaltet</strong> (opt-in pro <code>config.json</code>).</p>
 <h2 id="warum-es-das-gibt">Warum es das gibt<a class="headerlink" href="#warum-es-das-gibt" title="Permanent link">&para;</a></h2>
@@ -2724,12 +2724,12 @@ darin gelisteten Backends, sonst nur den Default aus <code>agentBackend</code>.<
 </thead>
 <tbody>
 <tr>
-<td><code>claude-code</code></td>
+<td><code>claude</code></td>
 <td><code>ANTHROPIC_API_KEY</code></td>
 <td>HTTP GET <code>https://api.anthropic.com/v1/models</code> mit dem Key. <strong>Gratis</strong> (keine Token-Kosten), validiert genau den Key.</td>
 </tr>
 <tr>
-<td><code>claude-code</code></td>
+<td><code>claude</code></td>
 <td>(sonst)</td>
 <td><code>claude -p "OK" --permission-mode bypassPermissions</code> mit 30 s Timeout. Testet die OAuth-Session aus <code>~/.claude/.credentials.json</code>.</td>
 </tr>
@@ -2791,18 +2791,18 @@ verbraucht keine Tokens.</p>
 </span></code></pre></div>
 <p>Druckt pro Backend eine Zeile mit Status + Detail. Exit 0 = alle
 <code>.ok</code>, Exit 1 = mindestens ein Backend <code>.failed</code>. Beispiel:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Prüfe Auth für 1 Backend(s): claude-code
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Prüfe Auth für 1 Backend(s): claude
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>✅ claude-code: OK
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>✅ claude: OK
 </span></code></pre></div>
 <p>Beim Auth-Fehler:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>❌ claude-code: FEHLGESCHLAGEN
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>❌ claude: FEHLGESCHLAGEN
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>   claude -p endete mit Exit 1: Failed to authenticate. API Error: 401 Invalid authentication credentials
 </span></code></pre></div>
 <h2 id="beobachtbarkeit">Beobachtbarkeit<a class="headerlink" href="#beobachtbarkeit" title="Permanent link">&para;</a></h2>
 <p><code>/status</code>-JSON enthält pro Backend ein <code>auth_checks</code>-Feld:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">&quot;authChecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;claude-code&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;claude&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">&quot;lastCheckedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-16T14:30:00Z&quot;</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="p">},</span>

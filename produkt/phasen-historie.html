@@ -3205,7 +3205,116 @@ vollständige Detail-Historie.</p>
   Kein Code-Change.</p>
 <h2 id="2026-05-16">2026-05-16<a class="headerlink" href="#2026-05-16" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Phase 4.43 Auth-Watchdog (opt-in, Default off)</strong>: Beta-
+<li>
+<p><strong>Phase 4.45 Backend-Identifier <code>"claude-code"</code> → <code>"claude"</code></strong>:
+  Beta-Tester-Feedback: der Backend-Identifier <code>"claude-code"</code>
+  ist unnötig lang und in Labels (<code>agent:backend:claude-code</code>)
+  sperrig. Da Agentry noch nicht öffentlich verteilt ist
+  (Closed-Beta), entscheiden wir uns für einen <strong>harten Cut</strong>
+  statt eines Backward-Compat-Layers — alle bestehenden Beta-
+  Tester migrieren beim nächsten Update ihre <code>~/.agentry/
+  config.json</code> und ggf. Labels einmalig. Geänderte Stellen
+  (alle Code-Pfade konsistent):</p>
+<ul>
+<li><code>ClaudeCodeBackend.identifier</code>: <code>"claude-code"</code> → <code>"claude"</code>.
+  Type-Name <code>ClaudeCodeBackend</code> bleibt — interner Swift-
+  Type, kein User-facing String, der nach dem CLI-Produkt
+  „Claude Code" benannt ist und damit semantisch korrekt
+  bleibt.</li>
+<li><code>Config.default.agentBackend</code>: <code>"claude"</code>.</li>
+<li><code>CLI.defaultConfigTemplate</code> (<code>agentry init</code>-Template):
+  <code>"agentBackend": "claude"</code>.</li>
+<li><code>ConfigValidator.supportedBackends</code>: <code>["claude", "codex"]</code>.
+  Validator weist <code>"claude-code"</code> als unbekanntes Backend
+  ab; Operator sieht klare Fehlermeldung mit der Liste der
+  erlaubten Werte.</li>
+<li><code>App.makeAgent</code> und <code>CLI.makeAgent</code>: Switch matched
+  strikt auf <code>"claude"</code> und <code>"codex"</code>, kein Alias-Mapping.</li>
+<li><code>AgentRouter.resolveBackend</code>: Label-Suffix wird 1:1 als
+  Backend-Identifier interpretiert — <code>agent:backend:claude</code>
+  ist die neue kanonische Form, <code>agent:backend:claude-code</code>
+  würde als „unbekanntes Backend" leise ignoriert und auf
+  den Default zurückfallen.</li>
+<li><code>LabelsInstaller.routingLabels</code>: kein Alias-Normalisierung;
+  legt für die <code>agentBackends</code>-Allowlist 1:1 die Labels an.</li>
+<li><code>AgentBanner.identity/coAuthorIdentity</code>: <code>"claude"</code>-Case
+  liefert Emoji <code>🟧</code>, Label „Claude Code" und Co-Author
+  <code>noreply@anthropic.com</code>. Der Backend-Identifier ist kurz,
+  der Anzeige-Name bleibt voll („Claude Code"), weil der
+  damit Reviewer in PR-Banner/Commits eindeutig wissen,
+  welches CLI-Produkt gelaufen ist.</li>
+<li><code>EnvironmentCheck</code>-<code>executable</code>-Mapping: vereinfacht zur
+  Identity-Funktion, weil sowohl <code>"claude"</code> als auch
+  <code>"codex"</code> als Backend-Identifier identisch zum CLI-Binary-
+  Namen sind. Funktion bleibt als Anpassungs-Punkt für
+  künftige Backends, deren ID nicht dem Binary entspricht.</li>
+<li><code>Config.hint(forField:)</code> für <code>agentBackend</code>-Decodierfehler
+  und <code>agentBackends</code>-Liste-Decodierfehler zeigen die neue
+  Liste <code>'claude' oder 'codex'</code>/<code>["claude", "codex"]</code>.</li>
+<li><code>DaemonStatus</code>-Doc-Kommentar: Beispiel-Identifier auf
+  <code>"claude"</code>.</li>
+<li><code>AgentBanner</code>-Doc-Kommentar: gleiche Anpassung.
+  Tests: bestehende Suites umgestellt (<code>ClaudeCodeBackendTests</code>
+  prüft <code>identifier == "claude"</code>, alle Test-Stringliterale in
+  <code>AgentBannerTests</code>, <code>AgentRouterTests</code>, <code>ConfigTests</code>,
+  <code>ConfigLoadErrorTests</code>, <code>ConfigValidatorTests</code>, <code>CLITests</code>,
+  <code>DaemonStatusTests</code>, <code>LabelsInstallerTests</code>,
+  <code>MetricsRendererTests</code>, <code>AuthWatchdogTests</code> migriert).
+  355 Tests grün (unverändert zur Phase 4.44 — Rename ist eine
+  reine String-Änderung). Migration für Beta-Tester (im
+  Troubleshooting + Glossar verlinkt):</li>
+<li><code>~/.agentry/config.json</code> öffnen, <code>"agentBackend":
+   "claude-code"</code> zu <code>"claude"</code> ändern (analog
+   <code>agentBackends</code>-Allowlist).</li>
+<li>Falls Labels installiert sind:
+   <code>agentry labels delete --name agent:backend:claude-code</code>
+   gefolgt von <code>agentry labels install</code>.</li>
+<li>Daemon neu starten.
+  Beim ersten Restart mit alter Config bricht der
+  ConfigValidator mit klarem Hinweis ab — keine stille
+  Fehlfunktion.</li>
+</ul>
+</li>
+<li>
+<p><strong>Phase 4.44 Codex-Sandbox-Fix + Flag-Update</strong>: Beta-Tester
+  meldete: Codex-Tickets sterben sofort mit „Operation not
+  permitted (os error 1)" und „failed to initialize in-process
+  app-server client". Diagnose (Phase 4.42-WARN-Log liefert
+  Codex' stderr direkt): die <code>codex</code>-CLI legt unter <code>~/.codex/</code>
+  Auth (<code>auth.json</code>), Session-/Memory-/Log-State (<code>sessions/</code>,
+  <code>memories/</code>, <code>logs_*.sqlite</code>, <code>state_*.sqlite*</code>) und einen
+  <code>~/.codex/.tmp</code>-Working-Bereich an — analog zu Claudes
+  <code>~/.claude/</code>. Unser <code>MacOSSandboxStrategy.defaultProfile</code>
+  erlaubt Schreibzugriffe auf <code>~/.claude</code> (seit Phase 2.4c),
+  aber <code>~/.codex</code> war nie in der Allowlist. Zweite Beobachtung
+  aus demselben Log: <code>--full-auto</code> ist in <code>codex</code> ≥ v0.130 als
+  deprecated markiert und verweist auf <code>--sandbox
+  workspace-write</code>. Fix:</p>
+<ul>
+<li><code>MacOSSandboxStrategy.defaultProfile</code>: zusätzlicher
+  <code>subpath</code>-Eintrag <code>~/.codex</code> analog zum <code>~/.claude</code>-
+  Pfad. Doc-Kommentar erläutert den Bezug zu Beta-16, damit
+  die Allowlist-Erweiterung in der Phasen-Historie
+  nachvollziehbar bleibt.</li>
+<li><code>CodexBackend.run</code>: <code>--full-auto</code> → <code>--sandbox
+  danger-full-access</code>. Gleiche Semantik wie vorher (Codex'
+  interne Sandbox/Approval-Schicht aus), aber ohne
+  Deprecation-Warning. Wir laufen ohnehin schon in unserer
+  eigenen macOS-/Linux-Sandbox; Codex' interne Schicht
+  wäre Defense-in-Depth-Doppelung und blockiert nur
+  Schreibversuche, die der Agent für seine Aufgabe
+  legitim braucht (z. B. Git-Config-Updates im Workspace).</li>
+<li><code>CodexBackend.checkCodexCLI</code> (Auth-Health-Check aus
+  Phase 4.43): gleicher Flag-Switch, damit der Smoke-Test
+  keinen anderen CLI-Pfad nimmt als der Produktiv-Lauf.
+  Tests: neuer <code>defaultProfileVendorState</code>-Test in
+  <code>MacOSSandboxStrategyTests</code> prüft, dass das Default-Profil
+  sowohl <code>~/.claude</code> als auch <code>~/.codex</code> als schreibbar
+  ausweist. 354 → 355 Tests grün.</li>
+</ul>
+</li>
+<li>
+<p><strong>Phase 4.43 Auth-Watchdog (opt-in, Default off)</strong>: Beta-
   Beobachtung — der Daemon läuft als Service-User stundenlang idle,
   während die OAuth-Session der Vendor-CLI (<code>claude login</code> →
   <code>~/.claude/.credentials.json</code>) im Hintergrund abläuft oder
@@ -3216,7 +3325,8 @@ vollständige Detail-Historie.</p>
   Pfad. Phase 4.43 baut den <strong>proaktiven</strong>: ein periodischer
   Health-Check pro Backend, <strong>bevor</strong> das nächste Ticket reinkommt,
   damit Operator zwischen Idle und Failure Zeit zum Reagieren hat.
-  Architektur:<ul>
+  Architektur:</p>
+<ul>
 <li>Neuer Typ <code>AuthHealthResult</code> (Enum, Sendable+Equatable) mit
   <code>.ok</code> / <code>.failed(reason)</code> / <code>.notSupported</code> / <code>.skipped(reason)</code>.
   Trennung wichtig fürs Alerting: nur <code>.failed</code> triggert WARN+
