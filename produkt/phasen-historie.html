@@ -3206,6 +3206,36 @@ vollständige Detail-Historie.</p>
 <h2 id="2026-05-16">2026-05-16<a class="headerlink" href="#2026-05-16" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p><strong>Phase 4.47 CI-Linux-Stabilität (ProcessRunner-Tests serialisiert,
+  EOF-Timeout 200 ms → 2 s)</strong>: CI-Run 25962179022 starb auf Linux mit
+  <strong>SIGSEGV</strong> im Foundation-RunLoop-Cleanup, <em>nachdem</em> die
+  <code>WebhookDeliveryStore</code>-Suite schon grün gemeldet hatte. Backtrace:
+  Thread 5 in <code>Process.setup()</code> → <code>CFRunLoopRun</code> segfaultet, Threads
+  8/13–18 hingen gleichzeitig in <code>_dispatch_group_wait_slow</code> aus
+  <code>ProcessRunner.waitForEOF</code> (<code>ProcessRunner.swift:126/169</code>). Zwei
+  vorherige Linux-Failures (Run 25940704918, 25938919528) hatten ein
+  anderes Symptom desselben Grundproblems: <code>ProcessRunnerTests</code>
+  verloren ~5–10 % stdout/stderr-Bytes (<code>result.stdout.count → 139264</code>
+  statt erwartet &gt; 150 000). Wurzel: swift-testing parallelisiert
+  Tests per Default; Foundation auf Linux hat aber genau <strong>einen
+  prozess-weiten CFRunLoop-Thread</strong> für alle <code>Process</code>-Instanzen
+  (gestartet in <code>Process.setup()</code>, sichtbar als Thread 5 im Crash-
+  Stack). Wenn <code>ProcessRunnerTests</code> ihre Subprozess-Stresser (<code>yes 'x'
+  | head -100000</code>) parallel zur restlichen Suite fahren, überfährt das
+  den Singleton-Worker: <code>waitForEOF</code> reißt sein 200-ms-Timeout, der
+  letzte Pipe-Chunk fehlt, und im Teardown crasht der RunLoop. macOS-
+  Job blieb grün (andere <code>Process</code>-Implementierung). Fix: <code>@Suite(
+  "ProcessRunner Pipe-Drain", .serialized)</code> zieht genau diese Stresser
+  aus dem Parallel-Strom raus, plus <code>waitForEOF</code>-Default 200 ms → 2 s,
+  damit langsame CI-Worker den letzten Chunk noch landen, bevor
+  <code>terminationHandler</code> resumed. Tests blieben 356 grün, lokale Laufzeit
+  unverändert (die <code>.serialized</code>-Suite läuft jetzt 3,28 s statt
+  vorher ~1,5 s parallel, aber das ist im Gesamtlauf von ~2 s
+  vernachlässigbar). Kein Verhalten-Change in der Produktion — der
+  Code-Pfad ist beim normalen Daemon-Lauf bereits sequenziell pro
+  Subprozess.</p>
+</li>
+<li>
 <p><strong>Phase 4.46 Failed-Fresh-Tickets als Transient (Re-Run-Pfad)</strong>:
   Beta-Tester-Frage: „Wie triggere ich ein failgeschlagenes
   Issue erneut?" Antwort vor 4.46: Label <code>agent:failed</code>
