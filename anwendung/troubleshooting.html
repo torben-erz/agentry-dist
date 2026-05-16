@@ -1083,6 +1083,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#failgeschlagenes-issue-erneut-anstoen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failgeschlagenes Issue erneut anstoßen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ticket-failt-in-phase-push" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2944,6 +2955,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#failgeschlagenes-issue-erneut-anstoen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failgeschlagenes Issue erneut anstoßen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#ticket-failt-in-phase-push" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3232,8 +3254,8 @@ Instance ist.</p>
    Wenn das <code>403</code> gibt: Token-Scope reicht nicht.</li>
 <li><strong>Issue hat bereits Status-Labels</strong> — Issues mit <code>agent:in-progress</code>,
    <code>agent:done</code>, <code>agent:failed</code> werden vom Polling herausgefiltert.
-   Status-Label entfernen oder <code>agent:failed</code> durch erneutes Setzen von
-   <code>agent-task</code> zurücksetzen.</li>
+   Status-Label entfernen reicht (siehe „Failgeschlagenes Issue erneut
+   anstoßen" weiter unten für die Details).</li>
 <li><strong>Issue ist eigentlich ein PR</strong> — GitHub mischt Issues und PRs am
    gleichen Endpoint. Agentry filtert PRs aus dem Fresh-Polling raus;
    wenn du auf einem PR <code>agent-task</code> setzt, passiert nichts. Für PRs
@@ -3307,9 +3329,38 @@ Das ist die erste Anlaufstelle:</p>
    Sandbox-Violation im stderr-Preview der warn-Zeile. Lösung:
    <code>extraReadOnlyBinds</code> / <code>extraWritePaths</code> in <code>sandbox.strategies</code>
    ergänzen.</p>
+<h3 id="failgeschlagenes-issue-erneut-anstoen">Failgeschlagenes Issue erneut anstoßen<a class="headerlink" href="#failgeschlagenes-issue-erneut-anstoen" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom:</strong> Ein Issue trägt <code>agent:failed</code>, du hast den Fehler im Repo
+behoben (Beschreibung präzisiert, Sandbox-Pfad ergänzt, Token erneuert,
+…) und willst das gleiche Issue noch einmal durchlaufen lassen.</p>
+<p><strong>Ab Beta-18 (Phase 4.46):</strong> ein einziger Befehl reicht.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span>&lt;N&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span>--remove-label<span class="w"> </span>agent:failed
+</span></code></pre></div>
+<p>Das <code>agent-task</code>-Label bleibt am Issue (der Daemon entfernt es bei
+Failure nicht). Beim nächsten Polling-Tick taucht das Issue als
+„bereit" auf, weil:</p>
+<ul>
+<li>Der <code>TicketFilter</code> filtert nur <code>agent:in-progress|done|failed</code>-Labels
+  raus — nach dem Entfernen ist das Ticket wieder durchlässig.</li>
+<li>Der <code>TicketQueue.claim()</code>-Check geht durch, weil failed-Fresh-Tickets
+  ab Beta-18 <strong>nicht mehr</strong> in <code>state.json</code> <code>processed</code> geschrieben
+  werden (Phase 4.46). Persistent ist nur Success — <code>agent:done</code> zu
+  entfernen wäre ein Doppel-PR-Risiko und bleibt entsprechend gesperrt.</li>
+</ul>
+<p><strong>Bis Beta-17 (alter Pfad, nur für Bestandsfälle relevant):</strong>
+Failed-Fresh-Tickets stehen in <code>~/.agentry/state.json</code> als <code>processed</code>.
+Das Label-Manöver allein reicht dort nicht. Optionen:</p>
+<ul>
+<li><strong>Neues Issue eröffnen</strong> mit dem gleichen Body (neue Nummer → andere
+  <code>globalID</code> → nicht in <code>processed</code>). Sauberster Weg ohne lokales
+  File-Editing.</li>
+<li><strong><code>state.json</code> editieren + Daemon-Restart</strong>: Daemon stoppen,
+  <code>jq '.processed -= ["&lt;owner&gt;/&lt;repo&gt;#&lt;N&gt;"]' ~/.agentry/state.json …</code>,
+  Daemon starten. Der Memory-Cache zwingt zum Neustart.</li>
+</ul>
 <h3 id="ticket-failt-in-phase-push">Ticket failt in Phase <code>.push</code><a class="headerlink" href="#ticket-failt-in-phase-push" title="Permanent link">&para;</a></h3>
 <p><strong>Symptom:</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Pipeline-Abbruch in Phase &#39;push&#39;: git push schlug fehl mit Exit-Code 128.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Pipeline-Abbruch in Phase &#39;push&#39;: git push schlug fehl mit Exit-Code 128.
 </span></code></pre></div>
 <p><strong>Wahrscheinliche Ursachen:</strong></p>
 <ol>
@@ -3330,9 +3381,9 @@ Das ist die erste Anlaufstelle:</p>
 <p><strong>Wahrscheinliche Ursache:</strong> Der Daemon ist nach dem PR-Push gecrasht,
 bevor er das Status-Label flippen konnte.</p>
 <p><strong>Lösung:</strong> Manuell:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">    </span>--remove-label<span class="w"> </span><span class="s2">&quot;agent:in-progress&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span>--add-label<span class="w"> </span><span class="s2">&quot;agent:done&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span>--remove-label<span class="w"> </span><span class="s2">&quot;agent:in-progress&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span>--add-label<span class="w"> </span><span class="s2">&quot;agent:done&quot;</span>
 </span></code></pre></div>
 <p>CrashRecovery erkennt das beim nächsten Start als „bereits erledigt"
 und überspringt es.</p>
@@ -3340,23 +3391,23 @@ und überspringt es.</p>
 <p><strong>Symptom:</strong> Du setzt <code>agent-revise</code> auf einen offenen PR, im Daemon-
 Log passiert nichts.</p>
 <p><strong>Diagnose:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>agentry<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>revise<span class="w">          </span><span class="c1"># reviseEnabled: true?</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>gh<span class="w"> </span>pr<span class="w"> </span>view<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span>--json<span class="w"> </span>labels
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>agentry<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>revise<span class="w">          </span><span class="c1"># reviseEnabled: true?</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>gh<span class="w"> </span>pr<span class="w"> </span>view<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span>--json<span class="w"> </span>labels
 </span></code></pre></div>
 <p><strong>Lösung:</strong></p>
 <ol>
 <li><strong><code>reviseEnabled: false</code></strong> in der Config — auf <code>true</code> setzen</li>
 <li><strong>Falsches <code>reviseLabel</code></strong> — Default ist <code>"agent-revise"</code>. Wenn du
    den Namen geändert hast, muss das Label im Repo angepasst werden:
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>agentry<span class="w"> </span>labels<span class="w"> </span>install
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>agentry<span class="w"> </span>labels<span class="w"> </span>install
 </span></code></pre></div></li>
 <li><strong>PR ist geschlossen oder gemergt</strong> — Revise greift nur auf offene PRs</li>
 </ol>
 <h2 id="update-distribution">Update &amp; Distribution<a class="headerlink" href="#update-distribution" title="Permanent link">&para;</a></h2>
 <h3 id="agentry-update-sagt-update-check-fehlgeschlagen"><code>agentry update</code> sagt „Update-Check fehlgeschlagen"<a class="headerlink" href="#agentry-update-sagt-update-check-fehlgeschlagen" title="Permanent link">&para;</a></h3>
 <p><strong>Symptom:</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Update-Check fehlgeschlagen: GitHub-Release konnte nicht abgefragt werden.
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>Exit 2.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Update-Check fehlgeschlagen: GitHub-Release konnte nicht abgefragt werden.
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>Exit 2.
 </span></code></pre></div>
 <p><strong>Wahrscheinliche Ursachen:</strong></p>
 <ol>
@@ -3375,13 +3426,13 @@ Log passiert nichts.</p>
 <p><strong>Wahrscheinliche Ursache:</strong> Der lokale Tap-Cache ist nicht
 synchronisiert.</p>
 <p><strong>Lösung:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>brew<span class="w"> </span>update<span class="w">                          </span><span class="c1"># Tap-Stand neu holen</span>
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>brew<span class="w"> </span>update<span class="w">                          </span><span class="c1"># Tap-Stand neu holen</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
 </span></code></pre></div>
 <p>Wenn <code>brew update</code> selbst hängt: Tap-Repo direkt frisch holen:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>brew<span class="w"> </span>untap<span class="w"> </span>torben-erz/agentry
-</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>brew<span class="w"> </span>tap<span class="w"> </span>torben-erz/agentry
-</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>brew<span class="w"> </span>untap<span class="w"> </span>torben-erz/agentry
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>brew<span class="w"> </span>tap<span class="w"> </span>torben-erz/agentry
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
 </span></code></pre></div>
 <h2 id="bekannte-limitierungen-kein-bug">Bekannte Limitierungen (kein Bug)<a class="headerlink" href="#bekannte-limitierungen-kein-bug" title="Permanent link">&para;</a></h2>
 <table>

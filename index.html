@@ -2816,6 +2816,17 @@ Crash-Recovery für hängende Tickets. Feature-Seiten:
   Auto-Detect: API-Key via gratis <code>/v1/models</code>-Call, sonst CLI-
   Smoke-Test. WARN-Log + <code>agentry_auth_*</code>-Metriken, sobald die
   Session bröckelt. Single-Shot via <code>agentry auth check</code>.</li>
+<li><strong>4.44</strong> Codex-Sandbox-Fix — <code>~/.codex</code> in die
+  <code>MacOSSandboxStrategy.defaultProfile</code>-Allowlist aufgenommen
+  (analog <code>~/.claude</code>), <code>--full-auto</code> → <code>--sandbox
+  danger-full-access</code> (Codex-CLI ≥ v0.130 Deprecation).</li>
+<li><strong>4.45</strong> Backend-Identifier <code>"claude-code"</code> → <code>"claude"</code> —
+  harter Cut in der Closed-Beta. Default-Backend, Allowlist-
+  Werte und Label <code>agent:backend:&lt;id&gt;</code> nutzen ab Beta-17 den
+  kürzeren Namen.</li>
+<li><strong>4.46</strong> Failed-Fresh-Tickets als Transient — Re-Run-Pfad
+  vereinfacht: <code>agent:failed</code>-Label entfernen reicht ab
+  Beta-18, kein state.json-Edit oder neues Issue mehr nötig.</li>
 </ul>
 <h3 id="phase-5-geschaftsmodell-offen">Phase 5 — Geschäftsmodell ⏸ offen<a class="headerlink" href="#phase-5-geschaftsmodell-offen" title="Permanent link">&para;</a></h3>
 <p>Lizenz-/Subscription-Mechanismus, Update-Notifier, Endnutzer-Dokumentation
@@ -2823,7 +2834,7 @@ Crash-Recovery für hängende Tickets. Feature-Seiten:
 offenen Punkte (inkl. Distributions-Reste, optionale Sandbox-Strategien
 und Blocker-Entscheidungen) in
 <a href="produkt/offene-punkte.html">Offene Punkte</a>.</p>
-<p><strong>355 Unit-Tests, alle grün.</strong></p>
+<p><strong>356 Unit-Tests, alle grün.</strong></p>
 <h2 id="wo-gehts-weiter">Wo geht's weiter?<a class="headerlink" href="#wo-gehts-weiter" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong><a href="getting-started/installation.html">Installation</a></strong> — System-Voraussetzungen, Tool-Setup.</li>

@@ -3206,6 +3206,54 @@ vollständige Detail-Historie.</p>
 <h2 id="2026-05-16">2026-05-16<a class="headerlink" href="#2026-05-16" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p><strong>Phase 4.46 Failed-Fresh-Tickets als Transient (Re-Run-Pfad)</strong>:
+  Beta-Tester-Frage: „Wie triggere ich ein failgeschlagenes
+  Issue erneut?" Antwort vor 4.46: Label <code>agent:failed</code>
+  entfernen reicht <strong>nicht</strong> — der Daemon schreibt Failed-
+  Fresh-Tickets nach <code>processed</code> in <code>~/.agentry/state.json</code>,
+  und <code>TicketQueue.claim()</code> returnt für solche Einträge <code>false</code>
+  (still, ohne Log-Spur). Operator musste entweder das Issue
+  neu eröffnen (neue Nummer = neue <code>globalID</code>) oder die
+  state.json manuell editieren UND den Daemon neu starten
+  (Memory-Cache).
+  Das ist doppelter Schutz, der versehentliche Doppel-Trigger
+  verhindert (Label-Filter UND processed-Set), aber den
+  legitimen Re-Run-Pfad genau aus dem Grund unnötig schwer
+  macht, an dem der Operator anfragt.
+  Fix: <code>Daemon.processFresh</code> ruft bei Failure ab sofort
+  <code>markCompletedTransient</code> statt <code>markCompleted</code> — das räumt
+  nur den In-Memory-<code>inFlight</code>-Slot, schreibt aber <strong>nicht</strong>
+  ins persistente <code>processed</code>. Bei Success bleibt das alte
+  Verhalten (<code>markCompleted</code> mit Persistenz), weil <code>agent:done</code>
+  am Issue zu entfernen ein versehentlicher Doppel-PR-Fehler
+  wäre. Bei Failure dagegen ist das Entfernen von <code>agent:failed</code>
+  ein explizites Operator-Signal „nochmal probieren".
+  Sicherheits-Argument: der Label-Filter (<code>TicketFilter.ready</code>
+  blockt <code>agent:failed</code>) bleibt der eine Schutzwall. Auf
+  Daemon-Crash würde der <code>HangingTicketFinder</code> ohnehin
+  aufräumen — kein neues Risiko.
+  Neuer Test <code>markCompletedTransientAllowsRetry</code> in
+  <code>TicketQueueTests</code>: nach <code>markCompletedTransient</code> ist
+  <code>isProcessed == false</code> und ein zweiter <code>claim()</code> returnt
+  <code>true</code> (= der Operator-Re-Run-Pfad funktioniert). 355 → 356
+  Tests grün.
+  Operator-Workflow ab Beta-18 für einen Re-Run:
+  <code>gh issue edit &lt;N&gt; -R &lt;owner&gt;/&lt;repo&gt; --remove-label
+  agent:failed</code> — das Issue läuft beim nächsten Polling-Tick
+  ganz normal als Fresh-Ticket durch. Kein state.json-Edit,
+  kein Daemon-Restart, kein neues Issue. Migration für Beta-17-
+  Users: bestehende <code>agent:failed</code>-Issues, die bereits in der
+  alten <code>state.json</code> als <code>processed</code> stehen, müssen einmalig
+  manuell aus der Datei entfernt werden (oder durch ein neues
+  Issue ersetzt). Neue Failures ab Beta-18-Start sind direkt
+  re-trigger-fähig.
+  Doku-Stellen: <code>anwendung/troubleshooting.md</code> ersetzt die
+  alte „state.json editieren + Daemon-Restart"-Anleitung
+  durch den Label-Single-Step, mit dem Hinweis, dass das
+  ab Beta-18 gilt; <code>anwendung/cli.md</code> ergänzt die Re-Run-
+  Sequenz in der Operativer-Status-Tabelle.</p>
+</li>
+<li>
 <p><strong>Phase 4.45 Backend-Identifier <code>"claude-code"</code> → <code>"claude"</code></strong>:
   Beta-Tester-Feedback: der Backend-Identifier <code>"claude-code"</code>
   ist unnötig lang und in Labels (<code>agent:backend:claude-code</code>)
