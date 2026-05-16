@@ -1148,6 +1148,8 @@
       
         
       
+        
+      
     
     
     
@@ -1628,6 +1630,34 @@
     
   
     Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/auth-watchdog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
   
 
     
@@ -2654,6 +2684,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#auth-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth-Watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sandbox" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3053,6 +3094,17 @@
     <span class="md-ellipsis">
       
         Update-Notifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auth-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth-Watchdog
       
     </span>
   </a>
@@ -3580,6 +3632,42 @@ Git-Convention).</p>
 </tbody>
 </table>
 <p>Details: <a href="../features/update-notifier.html">Update-Notifier</a>.</p>
+<h3 id="auth-watchdog">Auth-Watchdog<a class="headerlink" href="#auth-watchdog" title="Permanent link">&para;</a></h3>
+<p>Periodischer Health-Check der Vendor-CLI-Auth (<code>claude</code>, <code>codex</code>),
+um OAuth-Token-Ablauf vor dem nächsten Ticket sichtbar zu machen.</p>
+<table>
+<thead>
+<tr>
+<th>Schlüssel</th>
+<th>Default</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>authWatchdogEnabled</code></td>
+<td><code>false</code></td>
+<td>An/aus-Schalter. Bei <code>true</code> startet eine Detached-Task parallel zum Polling: Initial-Check sofort + periodischer Re-Check im konfigurierten Intervall. Bei <code>false</code>: kein Check, keine <code>agentry_auth_*</code>-Metriken im <code>/metrics</code>-Output.</td>
+</tr>
+<tr>
+<td><code>authWatchdogIntervalSeconds</code></td>
+<td><code>3600</code> (1 h)</td>
+<td>Abstand zwischen Checks. Mindestens 60 s (wird intern geklemmt — kürzere Intervalle erzeugen unnötig Rate-Limit-Druck ohne praktischen Nutzen).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Auto-Detect der Check-Strategie pro Backend:</strong></p>
+<ul>
+<li><code>ANTHROPIC_API_KEY</code> im Env → HTTP GET auf
+  <code>api.anthropic.com/v1/models</code> (gratis, keine Token-Kosten).</li>
+<li><code>OPENAI_API_KEY</code> im Env → HTTP GET auf <code>api.openai.com/v1/models</code>
+  (gratis).</li>
+<li>Sonst → CLI-Smoke-Test (<code>claude -p "OK"</code> bzw. <code>codex exec ... "OK"</code>
+  mit 30 s Timeout). Verbraucht ein paar Subscription-Tokens,
+  kostet aber bei OAuth-Subscriptions kein Geld.</li>
+</ul>
+<p>Single-Shot via <code>agentry auth check</code> (kein Daemon nötig). Details:
+<a href="../features/auth-watchdog.html">Auth-Watchdog</a>.</p>
 <h3 id="sandbox">Sandbox<a class="headerlink" href="#sandbox" title="Permanent link">&para;</a></h3>
 <table>
 <thead>

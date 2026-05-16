@@ -1148,6 +1148,8 @@
       
         
       
+        
+      
     
     
     
@@ -1628,6 +1630,34 @@
     
   
     Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/auth-watchdog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
   
 
     
@@ -3175,6 +3205,163 @@ vollständige Detail-Historie.</p>
   Kein Code-Change.</p>
 <h2 id="2026-05-16">2026-05-16<a class="headerlink" href="#2026-05-16" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>Phase 4.43 Auth-Watchdog (opt-in, Default off)</strong>: Beta-
+  Beobachtung — der Daemon läuft als Service-User stundenlang idle,
+  während die OAuth-Session der Vendor-CLI (<code>claude login</code> →
+  <code>~/.claude/.credentials.json</code>) im Hintergrund abläuft oder
+  serverseitig invalidiert wird. Beim ersten neuen Ticket schlägt
+  die Pipeline mit <code>Exit 1</code> in Phase <code>agentRun</code> zu — Phase 4.42
+  zeigt zwar im Failure-Log jetzt den Grund (<code>Failed to
+  authenticate. API Error: 401 …</code>), aber das ist nur der reaktive
+  Pfad. Phase 4.43 baut den <strong>proaktiven</strong>: ein periodischer
+  Health-Check pro Backend, <strong>bevor</strong> das nächste Ticket reinkommt,
+  damit Operator zwischen Idle und Failure Zeit zum Reagieren hat.
+  Architektur:<ul>
+<li>Neuer Typ <code>AuthHealthResult</code> (Enum, Sendable+Equatable) mit
+  <code>.ok</code> / <code>.failed(reason)</code> / <code>.notSupported</code> / <code>.skipped(reason)</code>.
+  Trennung wichtig fürs Alerting: nur <code>.failed</code> triggert WARN+
+  Counter, <code>.notSupported</code>/<code>.skipped</code> sind erwartete Nicht-
+  Ergebnisse (Backend ohne Health-Implementation bzw. Check
+  explizit ausgesetzt).</li>
+<li>Protocol-Erweiterung: <code>AgentBackend.authHealthCheck() async -&gt;
+  AuthHealthResult</code> mit Default-Impl <code>.notSupported</code> im
+  Extension-Block. Bestehende Backends ohne eigene
+  Implementation bleiben so unsichtbar für den Watchdog.</li>
+<li><code>ClaudeCodeBackend.authHealthCheck()</code> auto-detect:
+  <code>ANTHROPIC_API_KEY</code> im Env → HTTP GET auf
+  <code>api.anthropic.com/v1/models</code> (gratis, keine Token-Kosten,
+  validiert genau den Key); sonst <code>claude -p "OK"
+  --permission-mode bypassPermissions --output-format text</code> mit
+  30s-Timeout. <code>CodexBackend.authHealthCheck()</code> analog mit
+  <code>OPENAI_API_KEY</code> → <code>api.openai.com/v1/models</code> (Bearer-Auth)
+  bzw. <code>codex exec --skip-git-repo-check --full-auto "OK"</code>.
+  Gemeinsamer Helper <code>ClaudeCodeBackend.classifyHTTP(...)</code> und
+  <code>preview(stdout:stderr:)</code> — letzterer bevorzugt stderr, fällt
+  aber auf stdout zurück, weil die offizielle <code>claude</code>-CLI
+  Auth-Hinweise mitunter auf stdout schreibt (siehe Phase
+  4.42-Findung). Codex ruft <code>ClaudeCodeBackend.preview</code>
+  bewusst über — ein dritter Aufrufer würde einen eigenen
+  Backend-Auth-Helper rechtfertigen, zwei nicht.</li>
+<li>Neue Datei <code>Sources/agentry/AuthWatchdog.swift</code>: statischer
+  <code>enum</code> analog <code>UpdateNotifier</code> mit <code>runPeriodicLoop(backends:
+  intervalSeconds: status:)</code> (initial sofort + Sleep-Loop mit
+  Clamp ≥60s) und <code>checkAll(backends: status:)</code> als Single-
+  Shot-Variante. <code>logResult(backend:result:)</code> ist ein pure
+  Logging-Helper — extra exposed, damit Tests ihn testen
+  können, ohne <code>DaemonStatus</code>-Setup zu brauchen.</li>
+<li>Gemeinsamer <code>HTTPClient.data(for:)</code>-Helper als neue Datei —
+  minimaler URLSession-Wrapper, der die <code>withCheckedThrowing
+  Continuation</code>-Brücke kapselt (auf Linux unter Swift 6.3 ist
+  <code>URLSession.shared.data</code> noch nicht zuverlässig). Bewusst
+  minimal, kein Retry, kein JSON-Decode. UpdateNotifier hat
+  seine eigene Brücke, die könnte später konsolidiert werden
+  — Scope-Creep für diese Phase.</li>
+<li><code>Config</code>-Erweiterung: zwei flache Keys
+  <code>authWatchdogEnabled: Bool</code> (Default <strong>false</strong>) und
+  <code>authWatchdogIntervalSeconds: Int</code> (Default <code>3600</code>). Flach
+  statt Sub-Objekt, weil bestehende Config (Update-Notifier-
+  Felder) auch flach ist. CodingKeys, decode-mit-Fallback und
+  Convenience-Init aufgenommen. ConfigValidator setzt eine
+  Soft-Warning-Funktion <code>validateAuthWatchdog(enabled:
+  intervalSeconds:)</code>, die WARN loggt, wenn Interval unter
+  <code>AuthWatchdog.minimumIntervalSeconds</code> (60) liegt — kein
+  Throw, weil der Watchdog ohnehin clampt; Operator soll nur
+  sehen, dass sein Wert nicht 1:1 übernommen wird.</li>
+<li><code>App.runDaemon</code>-Integration: nach Status-Instanziierung, vor
+  HealthServer. <code>Task.detached</code> mit den <code>backendInstances</code>
+  (Default + Allowlist), Status-Actor und Intervall. INFO-Log
+  mit gewählten Backends + tatsächlich gewähltem Intervall;
+  DEBUG-Log, wenn der Watchdog aus ist. <code>Log.info</code> zeigt
+  bewusst den geclampten Wert, nicht den Config-Wert.</li>
+<li><code>DaemonStatus</code>-Erweiterung: <code>authChecks: [String:
+  AuthCheckSnapshot]</code> und <code>authCheckFailuresByBackend:
+  [String: Int]</code> als private Felder im Actor.
+  <code>recordAuthCheck(backend:result:at:)</code> aktualisiert beides;
+  nur <code>.failed</code> zählt den Failure-Counter hoch. Snapshot-
+  Struct um beide Felder erweitert. <code>AuthCheckSnapshot</code> ist
+  ein eigener <code>Sendable, Encodable</code>-Type mit Custom-<code>encode(to:)</code>,
+  der das <code>AuthHealthResult</code>-Enum in flaches JSON mappt
+  (<code>result: "ok"|"failed"|"not_supported"|"skipped"</code>,
+  optional <code>reason</code>, <code>lastCheckedAt</code>) — stabilere /status-
+  Repräsentation für Monitoring-Tools als ein nested-Enum-
+  Encoding.</li>
+<li><code>MetricsRenderer</code>-Erweiterung: drei neue Metriken, die nur
+  emittiert werden, wenn der Watchdog mindestens einmal lief
+  (Dict nicht leer): <code>agentry_auth_ok{backend="…"}</code> (gauge,
+  1/0), <code>agentry_auth_check_failures_total{backend="…"}</code>
+  (counter) und <code>agentry_auth_last_check_seconds{backend="…"}</code>
+  (gauge, -1 wenn nie). Schutz vor Verwirrung in Dashboards,
+  die bei inaktivem Watchdog sonst dauerhaft 0-Werte für
+  <code>agentry_auth_ok</code> lesen würden.</li>
+<li>CLI: neuer Top-Level-Subbefehl <code>agentry auth check</code>
+  (<code>runAuth</code>-Dispatcher + <code>runAuthCheck</code>). Lädt Config, baut
+  die gleichen Backends auf wie <code>App.runDaemon</code> (Default +
+  <code>agentBackends</code>-Allowlist), ruft pro Backend
+  <code>authHealthCheck()</code> und druckt ✅/❌/➖/⏭️ mit Begründung.
+  Exit 0 = alle <code>.ok</code>, 1 = mind. ein <code>.failed</code>. <code>makeAgent</code>
+  ist intern in CLI dupliziert, weil <code>App.makeAgent</code> private
+  ist — bei einem dritten Aufrufer wäre ein eigener
+  <code>AgentBackendFactory</code> fällig.</li>
+<li><code>CLI.defaultConfigTemplate</code> (<code>agentry init</code>) führt die zwei
+  Keys explizit mit Default-<code>false</code> auf, damit Beta-Tester
+  nicht raten müssen.</li>
+<li>Tests: neue Datei <code>AuthWatchdogTests.swift</code> mit zwei
+  Suites: <code>AuthWatchdog</code> (StubBackend-basiert, prüft
+  Record-Logik, Counter-Behavior für <code>.failed</code> vs.
+  <code>.notSupported</code>/<code>.skipped</code>, Multi-Backend, Log-Helper,
+  Minimum-Interval-Konstante) und <code>ClaudeCodeBackend
+  Auth-Health-Check</code> (classifyHTTP-Tabelle mit 200/401/403/
+  429/500, preview-Helper mit stderr-Vorrang + stdout-
+  Fallback + Empty + Truncate). <code>MetricsRendererTests</code> um
+  vier Auth-Tests + Helper-Signatur-Erweiterung
+  (<code>authChecks</code>/<code>authCheckFailuresByBackend</code>-Parameter mit
+  Defaults). <code>ConfigTests</code> um zwei Decoding-Tests
+  (<code>authWatchdogDefaults</code>/<code>authWatchdogCustomized</code>).
+  Vorher 333, nachher <strong>354 Tests grün</strong> (+21).</li>
+<li>Doku: neue Feature-Seite <code>docs/features/auth-watchdog.md</code>
+  mit Strategie-Tabelle pro Backend, Result-Typen, CLI-
+  Usage, Beobachtbarkeit-Snippets (JSON+Prometheus), „Wann
+  nicht aktivieren" und Bezug zu Phase 4.42. <code>mkdocs.yml</code>
+  <code>nav</code> nimmt die Seite zwischen <code>update-notifier</code> und
+  <code>sandbox</code> auf. <code>docs/referenz/config.md</code> bekommt einen
+  eigenen Auth-Watchdog-Block direkt nach Update-Notifier,
+  <code>docs/anwendung/konfiguration.md</code> Stufe 4 ergänzt analog,
+  <code>docs/anwendung/troubleshooting.md</code> verlinkt aus der
+  <code>phase: .agentRun</code>-Sektion auf den Watchdog,
+  <code>docs/anwendung/cli.md</code> zeigt <code>agentry auth check</code> in der
+  Operativer-Status-Tabelle plus Erklärungs-Block.
+  <code>docs/index.md</code> Status-Liste um 4.42 + 4.43 erweitert,
+  Test-Anzahl auf 354 hochgezogen.</li>
+</ul>
+</li>
+<li><strong>Phase 4.42 Beta-Diagnose: Backend-Fehler-Output auf <code>warn</code></strong>:
+  Beta-Test-Befund: ein Ticket failte mit
+  <code>Pipeline-Abbruch in Phase 'agentRun': Agent-Backend 'claude-code'
+  endete mit Exit 1</code> — <strong>ohne</strong> stderr-Snippet. Ursache im Code:
+  <code>ClaudeCodeBackend</code> und <code>CodexBackend</code> haben stdout/stderr nach
+  jedem Lauf nur über <code>Log.debug(...)</code> ausgegeben. Default-Log-Level
+  ist <code>.info</code>, also wurde die Diagnose im Standardbetrieb verschluckt.
+  Der Daemon synthetisiert zwar bei Exit≠0 einen <code>AgentExitError</code> mit
+  <code>stderrPreview</code>, aber genau dieser Stream ist bei klassischen CLI-
+  Fehlern (Auth-Hinweis, Quota, Sandbox-Bail-out) oft leer — die
+  Begründung kommt auf stdout. Beta-Tester sahen also nur die
+  nackte Exit-Zeile und mussten erst Log-Level umstellen oder das
+  Repo lesen, um weiterzukommen.
+  Fix: bei <code>!result.isSuccess</code> werden stdout und stderr (jeweils auf
+  1000 Zeichen Preview gekürzt, mit <code>(leer)</code>-Marker bei leerem
+  Stream) als <strong><code>Log.warn</code></strong> ausgegeben. Bei erfolgreichem Lauf
+  bleibt's bei <code>Log.debug</code> — sonst füllen die typischerweise sehr
+  langen Agent-Outputs den <code>agentry.log</code> zu schnell. Beide Backends
+  haben den gleichen Block, kein Helper-Typ — der duplizierte
+  Zehnzeiler ist klarer als eine Abstraktion über zwei Stellen.
+  Daemon-Verhalten und <code>AgentExitError</code> unverändert; die neue
+  warn-Zeile steht zusätzlich vor dem error-Log mit
+  <code>PipelineFailure</code>. <code>troubleshooting.md</code>-Diagnose-Hinweis von
+  <code>grep -A 5 'ClaudeCodeBackend'</code> auf direkten Log-Verweis
+  angepasst — die Antwort steht ab jetzt in derselben Zeile.
+  Keine API-/Config-/Label-Änderungen, keine neuen Tests
+  (Init-Tests bleiben, <code>run(...)</code> ist Live-Process — nicht
+  unit-bar), 333 Tests grün.</li>
 <li><strong>Phase 4.41 Beta-Handout-Generator entfernt</strong>: Folge-Schritt zu
   Phase 4.40 (Doku-Hosting live). Das in Phase 4.28 eingeführte
   <code>scripts/build-beta-handout.py</code> baute aus

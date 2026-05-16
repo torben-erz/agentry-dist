@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://torben-erz.github.io/agentry-dist/features/token-handling.html">
+        <link rel="canonical" href="https://torben-erz.github.io/agentry-dist/features/auth-watchdog.html">
       
       
-        <link rel="prev" href="metrics.html">
+        <link rel="prev" href="update-notifier.html">
       
       
-        <link rel="next" href="install-id.html">
+        <link rel="next" href="sandbox.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Token-Handling - Agentry</title>
+        <title>Auth-Watchdog - Agentry</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#token-handling" class="md-skip">
+        <a href="#auth-watchdog" class="md-skip">
           Zum Inhalt
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Token-Handling
+              Auth-Watchdog
             
           </span>
         </div>
@@ -1565,37 +1565,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Token-Handling
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="token-handling.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="token-handling.html" class="md-nav__link">
         
   
   
@@ -1611,175 +1584,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Inhaltsverzeichnis
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quelle-1-environment-variable" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quelle 1 — Environment-Variable
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quelle-2-macos-keychain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quelle 2 — macOS-Keychain
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quelle-3-linux-libsecret" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quelle 3 — Linux-libsecret
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quelle-4-token-datei" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quelle 4 — Token-Datei
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quelle-5-gh-glab-auth-token-fallback" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quelle 5 — gh / glab auth token (Fallback)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quelle-erzwingen-via-tokensource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quelle erzwingen via tokenSource
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#token-rotation-via-sighup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token-Rotation via SIGHUP
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#was-passiert-mit-dem-token-nach-dem-resolve" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Was passiert mit dem Token nach dem Resolve?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#welche-token-scopes-brauche-ich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Welche Token-Scopes brauche ich?
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Welche Token-Scopes brauche ich?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#github" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GitHub
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gitlab" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GitLab
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sicherheits-eigenschaften" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sicherheits-Eigenschaften
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#im-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Im Code
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1845,10 +1649,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="auth-watchdog.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="auth-watchdog.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1864,6 +1695,114 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#warum-es-das-gibt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warum es das gibt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aktivierung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aktivierung
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-strategie-pro-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check-Strategie pro Backend
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ergebnis-typen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ergebnis-Typen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#single-shot-via-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single-Shot via CLI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#beobachtbarkeit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Beobachtbarkeit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wann-nicht-aktivieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wann nicht aktivieren
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bezug-zu-phase-442-backend-fehler-output-auf-warn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bezug zu Phase 4.42 (Backend-Fehler-Output auf warn)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2616,10 +2555,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quelle-1-environment-variable" class="md-nav__link">
+  <a href="#warum-es-das-gibt" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quelle 1 — Environment-Variable
+        Warum es das gibt
       
     </span>
   </a>
@@ -2627,10 +2566,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quelle-2-macos-keychain" class="md-nav__link">
+  <a href="#aktivierung" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quelle 2 — macOS-Keychain
+        Aktivierung
       
     </span>
   </a>
@@ -2638,10 +2577,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quelle-3-linux-libsecret" class="md-nav__link">
+  <a href="#check-strategie-pro-backend" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quelle 3 — Linux-libsecret
+        Check-Strategie pro Backend
       
     </span>
   </a>
@@ -2649,10 +2588,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quelle-4-token-datei" class="md-nav__link">
+  <a href="#ergebnis-typen" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quelle 4 — Token-Datei
+        Ergebnis-Typen
       
     </span>
   </a>
@@ -2660,10 +2599,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quelle-5-gh-glab-auth-token-fallback" class="md-nav__link">
+  <a href="#single-shot-via-cli" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quelle 5 — gh / glab auth token (Fallback)
+        Single-Shot via CLI
       
     </span>
   </a>
@@ -2671,10 +2610,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quelle-erzwingen-via-tokensource" class="md-nav__link">
+  <a href="#beobachtbarkeit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quelle erzwingen via tokenSource
+        Beobachtbarkeit
       
     </span>
   </a>
@@ -2682,10 +2621,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#token-rotation-via-sighup" class="md-nav__link">
+  <a href="#wann-nicht-aktivieren" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Token-Rotation via SIGHUP
+        Wann nicht aktivieren
       
     </span>
   </a>
@@ -2693,71 +2632,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#was-passiert-mit-dem-token-nach-dem-resolve" class="md-nav__link">
+  <a href="#bezug-zu-phase-442-backend-fehler-output-auf-warn" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Was passiert mit dem Token nach dem Resolve?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#welche-token-scopes-brauche-ich" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Welche Token-Scopes brauche ich?
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Welche Token-Scopes brauche ich?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#github" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GitHub
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gitlab" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GitLab
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sicherheits-eigenschaften" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sicherheits-Eigenschaften
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#im-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Im Code
+        Bezug zu Phase 4.42 (Backend-Fehler-Output auf warn)
       
     </span>
   </a>
@@ -2781,7 +2659,7 @@
 
 
   
-    <a href="https://github.com/torben-erz/Agentry/edit/develop/docs/features/token-handling.md" title="Seite editieren" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/torben-erz/Agentry/edit/develop/docs/features/auth-watchdog.md" title="Seite editieren" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -2789,236 +2667,199 @@
   
 
 
-<h1 id="token-handling">Token-Handling<a class="headerlink" href="#token-handling" title="Permanent link">&para;</a></h1>
-<p>Agentry braucht ein <strong>Provider-Token</strong> (GitHub-PAT, GitLab-PAT, …) für
-API-Calls, Issue-Kommentare, PR/MR-Erstellung und git-Push. Das Token kommt
-aus einer von <strong>fünf</strong> Quellen — in dieser Default-Priorität:</p>
-<pre class="mermaid"><code>flowchart LR
-    A[Daemon-Start] --&gt; B{"1. Env-Variable&lt;br/&gt;AGENTRY_*_TOKEN?"}
-    B --&gt;|gesetzt| OK[Token]
-    B --&gt;|leer| C{"2. Keychain&lt;br/&gt;(macOS)&lt;br/&gt;konfiguriert?"}
-    C --&gt;|gesetzt + Item da| OK
-    C --&gt;|nicht da| D{"3. libsecret&lt;br/&gt;(Linux)&lt;br/&gt;konfiguriert?"}
-    D --&gt;|secret-tool liefert| OK
-    D --&gt;|nicht da| E{"4. tokenFile&lt;br/&gt;in Config?"}
-    E --&gt;|gesetzt + 0600| OK
-    E --&gt;|nicht da| F["5. gh/glab&lt;br/&gt;auth token"]
-    F --&gt; OK
-    OK --&gt; Z["GH_TOKEN /&lt;br/&gt;GITLAB_TOKEN&lt;br/&gt;exportieren"]
-    Z --&gt; Y[Daemon läuft]</code></pre>
-<p><code>Config.tokenSource</code> (optional) <strong>erzwingt</strong> eine einzelne Quelle, statt
-die Reihenfolge abzuklappern — sinnvoll, wenn Compliance „nur Keychain"
-verlangt oder vorhandene Env-Variablen ignoriert werden sollen.</p>
-<h2 id="quelle-1-environment-variable">Quelle 1 — Environment-Variable<a class="headerlink" href="#quelle-1-environment-variable" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AGENTRY_GITHUB_TOKEN</span><span class="o">=</span><span class="s1">&#39;ghp_…&#39;</span><span class="w">   </span><span class="c1"># bzw. AGENTRY_GITLAB_TOKEN</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>agentry
+<h1 id="auth-watchdog">Auth-Watchdog<a class="headerlink" href="#auth-watchdog" title="Permanent link">&para;</a></h1>
+<p>Agentry kann die Auth-Lage der konfigurierten Agent-Backends
+(<code>claude-code</code>, <code>codex</code>) periodisch prüfen — bevor das nächste Ticket
+hereinkommt und auf eine kaputte OAuth-Session trifft. <strong>Default
+ausgeschaltet</strong> (opt-in pro <code>config.json</code>).</p>
+<h2 id="warum-es-das-gibt">Warum es das gibt<a class="headerlink" href="#warum-es-das-gibt" title="Permanent link">&para;</a></h2>
+<p>Beta-Beobachtung: Ein Daemon kann stundenlang idle warten, ohne dass
+die Vendor-CLIs zwischendurch angesprochen werden. Wenn die OAuth-
+Session der CLI (<code>claude login</code>) in dieser Zeit abläuft oder
+serverseitig invalidiert wird, fällt die Pipeline beim ersten neuen
+Ticket mit <code>Exit 1</code> aus der Phase <code>agentRun</code> — ohne Vorwarnung.</p>
+<p>Der Watchdog macht den Auth-Verfall <strong>vor</strong> dem nächsten Ticket
+sichtbar: WARN-Log + <code>agentry_auth_ok</code>-Gauge auf 0 +
+<code>agentry_auth_check_failures_total</code>-Counter steigt + <code>/status</code>-JSON
+führt das fehlerhafte Backend mit Grund auf.</p>
+<h2 id="aktivierung">Aktivierung<a class="headerlink" href="#aktivierung" title="Permanent link">&para;</a></h2>
+<p>Zwei Schlüssel in <code>~/.agentry/config.json</code>:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&quot;authWatchdogEnabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;authWatchdogIntervalSeconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>Praktisch für Container, CI, systemd-Units. Das Token kommt aus dem
-Orchestrator (Docker-Secret, systemd-<code>EnvironmentFile=</code>, …) und wird nie
-auf Disk geschrieben.</p>
-<h2 id="quelle-2-macos-keychain">Quelle 2 — macOS-Keychain<a class="headerlink" href="#quelle-2-macos-keychain" title="Permanent link">&para;</a></h2>
-<p>Setup einmalig:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>security<span class="w"> </span>add-generic-password<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>-s<span class="w"> </span>com.nanoapes.agentry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>-a<span class="w"> </span>github<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>-w<span class="w"> </span>ghp_xxxxxxxxxxxxxxxx<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>-U<span class="w">   </span><span class="c1"># update wenn schon vorhanden</span>
-</span></code></pre></div>
-<p>Config:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;github&quot;</span><span class="p">,</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;tokenKeychainService&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;com.nanoapes.agentry&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>Account-Name ist automatisch <code>github</code> oder <code>gitlab</code> (provider-abhängig).
-Der Daemon liest beim Start via <code>Security.framework</code> (kein Subprozess) —
-<strong>Plattform-Guard <code>#if os(macOS)</code></strong>: auf Linux ist die Quelle inaktiv.</p>
-<p><strong>Headless-Hinweis</strong>: Beim ersten Lese-Versuch fragt macOS einmal nach
-Zugriff. Bei <code>launchd</code>-Daemons ohne UI-Session: das Keychain-Item beim
-Anlegen mit <code>-A</code> (allow any application) freigeben <strong>oder</strong> ein
-separates Login-Keychain für den Service-User pflegen.</p>
-<h2 id="quelle-3-linux-libsecret">Quelle 3 — Linux-libsecret<a class="headerlink" href="#quelle-3-linux-libsecret" title="Permanent link">&para;</a></h2>
-<p>Setup einmalig (Paket: <code>libsecret-tools</code> auf Ubuntu/Debian):</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libsecret-tools
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;ghp_xxxxxxxxxxxxxxxx&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>secret-tool<span class="w"> </span>store<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>--label<span class="w"> </span><span class="s2">&quot;Agentry GitHub Token&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>service<span class="w"> </span>agentry<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>account<span class="w"> </span>github
-</span></code></pre></div>
-<p>Config (Default-Attribute matchen die Setup-Konvention):</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;github&quot;</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>Oder explizit andere Attribute:</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;tokenLibsecretAttributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;service&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-vault&quot;</span><span class="p">,</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">&quot;account&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;agentry-prod&quot;</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>Der Daemon ruft <code>secret-tool lookup &lt;attr&gt; &lt;val&gt; …</code>. Ist <code>secret-tool</code>
-nicht installiert, wird die Quelle leise übersprungen — die Hierarchie
-fällt weiter zur Token-Datei oder zum CLI-Fallback.</p>
-<h2 id="quelle-4-token-datei">Quelle 4 — Token-Datei<a class="headerlink" href="#quelle-4-token-datei" title="Permanent link">&para;</a></h2>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;tokenFile&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/etc/agentry/github.token&quot;</span><span class="w"> </span><span class="p">}</span>
-</span></code></pre></div>
-<p>Der gesamte Datei-Inhalt (nach Trimming) wird als Token verwendet.
-Permissions müssen <strong><code>0600</code></strong> oder strikter (z. B. <code>0400</code>) sein:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>install<span class="w"> </span>-m<span class="w"> </span><span class="m">600</span><span class="w"> </span>-o<span class="w"> </span>agentry<span class="w"> </span>-g<span class="w"> </span>agentry<span class="w"> </span>/dev/null<span class="w"> </span>/etc/agentry/github.token
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;ghp_...&quot; &gt; /etc/agentry/github.token&#39;</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/etc/agentry/github.token
-</span></code></pre></div>
-<p>Bei lockereren Permissions verweigert Agentry den Start mit klarer
-Fehlermeldung:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Token-Datei /etc/agentry/github.token hat Permissions 644 — zu locker.
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Erforderlich: 0600 (`chmod 600 /etc/agentry/github.token`).
-</span></code></pre></div>
-<h2 id="quelle-5-gh-glab-auth-token-fallback">Quelle 5 — <code>gh</code> / <code>glab auth token</code> (Fallback)<a class="headerlink" href="#quelle-5-gh-glab-auth-token-fallback" title="Permanent link">&para;</a></h2>
-<p>Wenn keine der vier vorherigen Quellen ein Token liefert, ruft Agentry
-<code>gh auth token</code> (bei <code>provider: github</code>) bzw. <code>glab auth token</code>
-(bei <code>provider: gitlab</code>). Voraussetzung: <code>gh auth login</code> bzw.
-<code>glab auth login</code> wurde einmalig ausgeführt. Ideal für lokale Dev-Setups.</p>
-<h2 id="quelle-erzwingen-via-tokensource">Quelle erzwingen via <code>tokenSource</code><a class="headerlink" href="#quelle-erzwingen-via-tokensource" title="Permanent link">&para;</a></h2>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;tokenSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;keychain&quot;</span><span class="w"> </span><span class="p">}</span>
-</span></code></pre></div>
-<p>Erlaubte Werte: <code>"env"</code>, <code>"keychain"</code>, <code>"libsecret"</code>, <code>"file"</code>, <code>"cli"</code>.
-Wenn die erzwungene Quelle nicht liefert, <strong>wirft</strong> der Daemon — es gibt
-kein stilles Fallback. Sinnvoll für Compliance-Setups, wo nur ein einzige
-Token-Pfad zugelassen sein darf.</p>
-<p><code>tokenSource: null</code> (Default) → Default-Reihenfolge wie oben.</p>
-<h2 id="token-rotation-via-sighup">Token-Rotation via SIGHUP<a class="headerlink" href="#token-rotation-via-sighup" title="Permanent link">&para;</a></h2>
-<p>Tokens haben oft kürzere Lebensdauer als Daemon-Uptime (GitHub-App-Tokens:
-1 h, kurzlebige PATs: 7 Tage). Statt den Daemon neuzustarten:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># 1. Neues Token in der Quelle ablegen</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>security<span class="w"> </span>add-generic-password<span class="w"> </span>-s<span class="w"> </span>com.nanoapes.agentry<span class="w"> </span>-a<span class="w"> </span>github<span class="w"> </span>-w<span class="w"> </span>ghp_NEW<span class="w"> </span>-U
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># oder: echo &#39;ghp_NEW&#39; &gt; /etc/agentry/github.token</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># oder: AGENTRY_GITHUB_TOKEN nicht änderbar im laufenden Prozess</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">#       → Keychain/libsecret/Datei sind die praktischen Pfade</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># 2. SIGHUP an den Daemon</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="nb">kill</span><span class="w"> </span>-HUP<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;agentry daemon&#39;</span><span class="k">)</span>
-</span></code></pre></div>
-<p>Der <code>TokenRotator</code> (eigene Datei <code>Sources/agentry/TokenRotator.swift</code>)
-löst dann einen Re-Resolve aus, der die konfigurierte Quellen-Hierarchie
-neu abklappert und das frische Token in <code>GH_TOKEN</code>/<code>GITLAB_TOKEN</code> setzt.
-Polling-/Worker-Loops nutzen das neue Token ab dem nächsten Subprozess-
-Aufruf.</p>
-<p>Logging:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>TokenRotator: Token neu geladen aus macOS-Keychain (service=&#39;com.nanoapes.agentry&#39;, account=&#39;github&#39;). GH_TOKEN im Prozess-Env aktualisiert.
-</span></code></pre></div>
-<p>Bei einem Refresh-Fehler bleibt der alte Token im Env aktiv und der Daemon
-loggt:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>TokenRotator: Refresh fehlgeschlagen — &lt;reason&gt;. Alter Token bleibt im Env.
-</span></code></pre></div>
-<p><strong>Hinweis Env-Variable</strong>: Wer in der Default-Reihenfolge bleibt und das
-<strong>Env-Token</strong> rotieren will, hat ein Problem — ein laufender Prozess
-sieht den Env-Wert beim Start, nicht beim Refresh. Lösung: für rotierende
-Tokens Keychain/libsecret/Datei nutzen.</p>
-<h2 id="was-passiert-mit-dem-token-nach-dem-resolve">Was passiert mit dem Token nach dem Resolve?<a class="headerlink" href="#was-passiert-mit-dem-token-nach-dem-resolve" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>In den <code>GitHubClient</code> / <code>GitLabClient</code></strong> für REST-API-Aufrufe.</li>
-<li><strong>In die Process-Env als <code>GH_TOKEN</code> / <code>GITLAB_TOKEN</code></strong> — damit alle
-   <code>gh</code>/<code>glab</code>-Subprocesses und git-Credential-Helpers <strong>dieselbe</strong> Auth
-   nutzen. Kein interaktiver Login mehr nötig in Headless-Setups.</li>
-<li><strong>Nicht</strong> in Logs — die Logzeile zeigt nur die <strong>Quelle</strong>:</li>
-</ol>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Token bezogen aus: macOS-Keychain (service=&#39;com.nanoapes.agentry&#39;, account=&#39;github&#39;).
-</span></code></pre></div>
-<h2 id="welche-token-scopes-brauche-ich">Welche Token-Scopes brauche ich?<a class="headerlink" href="#welche-token-scopes-brauche-ich" title="Permanent link">&para;</a></h2>
-<h3 id="github">GitHub<a class="headerlink" href="#github" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Scope</th>
-<th>Wofür</th>
+<th>Schlüssel</th>
+<th>Default</th>
+<th>Beschreibung</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>repo</code></td>
-<td>Issues lesen, Kommentare schreiben, Branches pushen, PRs erstellen</td>
+<td><code>authWatchdogEnabled</code></td>
+<td><code>false</code></td>
+<td>Master-Switch. Bei <code>false</code> läuft kein Loop und keine Metriken werden emittiert.</td>
 </tr>
 <tr>
-<td><code>workflow</code></td>
-<td>nur nötig wenn der Agent Workflow-Files ändern darf</td>
-</tr>
-<tr>
-<td><code>read:org</code></td>
-<td>nur bei <code>watch.ownerScope</code> mit Org-Zugriff</td>
+<td><code>authWatchdogIntervalSeconds</code></td>
+<td><code>3600</code> (1 h)</td>
+<td>Sekunden zwischen Checks. Untergrenze 60 — kleinere Werte werden intern auf 60 geklemmt.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="gitlab">GitLab<a class="headerlink" href="#gitlab" title="Permanent link">&para;</a></h3>
+<p>Bei aktiver Allowlist (<code>agentBackends</code>) prüft der Watchdog <strong>alle</strong>
+darin gelisteten Backends, sonst nur den Default aus <code>agentBackend</code>.</p>
+<h2 id="check-strategie-pro-backend">Check-Strategie pro Backend<a class="headerlink" href="#check-strategie-pro-backend" title="Permanent link">&para;</a></h2>
+<p>Auto-Detect, basierend auf den Environment-Variablen:</p>
 <table>
 <thead>
 <tr>
-<th>Scope</th>
-<th>Wofür</th>
+<th>Backend</th>
+<th>Env-Variable gesetzt?</th>
+<th>Check-Pfad</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>api</code></td>
-<td>Vollzugriff für Polling, Webhook-Setup, Issue/MR-Updates</td>
+<td><code>claude-code</code></td>
+<td><code>ANTHROPIC_API_KEY</code></td>
+<td>HTTP GET <code>https://api.anthropic.com/v1/models</code> mit dem Key. <strong>Gratis</strong> (keine Token-Kosten), validiert genau den Key.</td>
 </tr>
 <tr>
-<td><code>read_repository</code> / <code>write_repository</code></td>
-<td>git-Push via Token-URL</td>
+<td><code>claude-code</code></td>
+<td>(sonst)</td>
+<td><code>claude -p "OK" --permission-mode bypassPermissions</code> mit 30 s Timeout. Testet die OAuth-Session aus <code>~/.claude/.credentials.json</code>.</td>
+</tr>
+<tr>
+<td><code>codex</code></td>
+<td><code>OPENAI_API_KEY</code></td>
+<td>HTTP GET <code>https://api.openai.com/v1/models</code> mit Bearer-Auth. <strong>Gratis</strong>, validiert den Key.</td>
+</tr>
+<tr>
+<td><code>codex</code></td>
+<td>(sonst)</td>
+<td><code>codex exec --skip-git-repo-check --full-auto "OK"</code> mit 30 s Timeout. Testet die OAuth-Session.</td>
 </tr>
 </tbody>
 </table>
-<h2 id="sicherheits-eigenschaften">Sicherheits-Eigenschaften<a class="headerlink" href="#sicherheits-eigenschaften" title="Permanent link">&para;</a></h2>
+<p>Token-Kosten des CLI-Pfads sind <strong>kein</strong> Problem, weil dort per
+Definition kein API-Key gesetzt ist — die Vendor-CLI nutzt die
+Subscription, die mit einer Flatrate (Anthropic Pro/Max bzw. ChatGPT
+Plus/Pro) bezahlt ist. Bei API-Key-Setups gewinnt immer Pfad 1 und
+verbraucht keine Tokens.</p>
+<h2 id="ergebnis-typen">Ergebnis-Typen<a class="headerlink" href="#ergebnis-typen" title="Permanent link">&para;</a></h2>
+<p><code>AuthHealthResult</code> kennt vier Varianten:</p>
 <table>
 <thead>
 <tr>
-<th>Quelle</th>
-<th>Auf Disk?</th>
-<th>Sichtbar via …</th>
+<th>Variante</th>
+<th>Bedeutung</th>
+<th>Alarm?</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Env-Variable</td>
-<td>nein</td>
-<td><code>ps -E</code>, <code>/proc/&lt;pid&gt;/environ</code> (root oder Owner)</td>
+<td><code>.ok</code></td>
+<td>Vendor-API antwortet 200 bzw. CLI-Smoke-Test Exit 0.</td>
+<td>Nein</td>
 </tr>
 <tr>
-<td>macOS-Keychain</td>
-<td>ja, verschlüsselt</td>
-<td>Keychain-Access-UI, <code>security</code>-CLI mit Berechtigung</td>
+<td><code>.failed(reason)</code></td>
+<td>401/403/429/5xx oder CLI-Exit ≠ 0. <code>reason</code> enthält HTTP-Status oder stdout/stderr-Snippet.</td>
+<td><strong>Ja</strong> — WARN-Log + Counter</td>
 </tr>
 <tr>
-<td>Linux-libsecret</td>
-<td>ja, vom Session-Keyring verwaltet</td>
-<td>Seahorse-UI / <code>secret-tool</code></td>
+<td><code>.notSupported</code></td>
+<td>Backend ohne eigene <code>authHealthCheck</code>-Implementierung (Default-Fallback im Protocol).</td>
+<td>Nein</td>
 </tr>
 <tr>
-<td>Token-Datei</td>
-<td>ja, mit <code>0600</code></td>
-<td>nur Owner kann lesen</td>
-</tr>
-<tr>
-<td><code>gh auth token</code></td>
-<td>ja, in <code>~/.config/gh/hosts.yml</code></td>
-<td>gh-CLI managed</td>
+<td><code>.skipped(reason)</code></td>
+<td>Check explizit übersprungen, z. B. URL-Build-Fehler.</td>
+<td>Nein</td>
 </tr>
 </tbody>
 </table>
-<p>Im Daemon liegt das Token im RAM und in der Process-Env. Wer
-<code>/proc/&lt;pid&gt;/environ</code> lesen kann (root, Owner), sieht es. Bei strikten
-Anforderungen muss eine Sandbox-/User-Trennung dazukommen — siehe
-<a href="sandbox.html">Sandbox</a>.</p>
-<h2 id="im-code">Im Code<a class="headerlink" href="#im-code" title="Permanent link">&para;</a></h2>
+<p>Nur <code>.failed</code> triggert ein Alarm-Signal — <code>.notSupported</code> und
+<code>.skipped</code> sind erwartete Nicht-Ergebnisse.</p>
+<h2 id="single-shot-via-cli">Single-Shot via CLI<a class="headerlink" href="#single-shot-via-cli" title="Permanent link">&para;</a></h2>
+<p>Für die Erstinstallation (bevor der Daemon überhaupt läuft) gibt's:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>agentry<span class="w"> </span>auth<span class="w"> </span>check
+</span></code></pre></div>
+<p>Druckt pro Backend eine Zeile mit Status + Detail. Exit 0 = alle
+<code>.ok</code>, Exit 1 = mindestens ein Backend <code>.failed</code>. Beispiel:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Prüfe Auth für 1 Backend(s): claude-code
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>✅ claude-code: OK
+</span></code></pre></div>
+<p>Beim Auth-Fehler:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>❌ claude-code: FEHLGESCHLAGEN
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>   claude -p endete mit Exit 1: Failed to authenticate. API Error: 401 Invalid authentication credentials
+</span></code></pre></div>
+<h2 id="beobachtbarkeit">Beobachtbarkeit<a class="headerlink" href="#beobachtbarkeit" title="Permanent link">&para;</a></h2>
+<p><code>/status</code>-JSON enthält pro Backend ein <code>auth_checks</code>-Feld:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">&quot;authChecks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;claude-code&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">&quot;lastCheckedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-16T14:30:00Z&quot;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="nt">&quot;codex&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;failed&quot;</span><span class="p">,</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OpenAI /v1/models: API-Key abgelehnt (HTTP 401).&quot;</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="nt">&quot;lastCheckedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-16T14:30:00Z&quot;</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Prometheus-Metriken unter <code>/metrics</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Metrik</th>
+<th>Typ</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>agentry_auth_ok{backend="…"}</code></td>
+<td>Gauge</td>
+<td>1 = letzter Check OK, 0 = failed/nie geprüft</td>
+</tr>
+<tr>
+<td><code>agentry_auth_check_failures_total{backend="…"}</code></td>
+<td>Counter</td>
+<td>Kumulativ <code>.failed</code>-Checks pro Backend</td>
+</tr>
+<tr>
+<td><code>agentry_auth_last_check_seconds{backend="…"}</code></td>
+<td>Gauge</td>
+<td>Sekunden seit letztem Check pro Backend, -1 wenn nie</td>
+</tr>
+</tbody>
+</table>
+<p>Wird <strong>nur</strong> emittiert, wenn der Watchdog mindestens einmal gelaufen
+ist — bei <code>authWatchdogEnabled=false</code> fehlen die Metriken im Output,
+damit Dashboards keine 0-Werte für inaktive Setups zeigen.</p>
+<h2 id="wann-nicht-aktivieren">Wann nicht aktivieren<a class="headerlink" href="#wann-nicht-aktivieren" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/torben-erz/Agentry/blob/develop/Sources/agentry/TokenProvider.swift"><code>TokenProvider.swift</code></a> — Quellen-Logik, Preference-Steuerung</li>
-<li><a href="https://github.com/torben-erz/Agentry/blob/develop/Sources/agentry/Keychain.swift"><code>Keychain.swift</code></a> — macOS-Keychain-Wrapper (Security.framework)</li>
-<li><a href="https://github.com/torben-erz/Agentry/blob/develop/Sources/agentry/TokenRotator.swift"><code>TokenRotator.swift</code></a> — SIGHUP-Listener für Token-Refresh</li>
-<li><a href="https://github.com/torben-erz/Agentry/blob/develop/Sources/agentry/EnvironmentCheck.swift"><code>EnvironmentCheck.swift</code></a></li>
-<li><a href="https://github.com/torben-erz/Agentry/blob/develop/Sources/agentry/App.swift"><code>App.swift</code></a> — Token wird einmal resolved, dann via <code>setenv("GH_TOKEN"|"GITLAB_TOKEN", …)</code> weitergereicht</li>
-<li>Tests: <a href="https://github.com/torben-erz/Agentry/blob/develop/Tests/agentryTests/TokenProviderTests.swift"><code>TokenProviderTests.swift</code></a></li>
+<li><strong>API-Key-only-Setups</strong> mit <code>ANTHROPIC_API_KEY</code>/<code>OPENAI_API_KEY</code>:
+  API-Keys laufen nicht ab. Der Watchdog würde stündlich gegen
+  <code>/v1/models</code> pingen, ohne dass es etwas zu finden gibt. Außer du
+  willst Quota-Sperren früh sehen — dann sinnvoll.</li>
+<li><strong>Sehr knappe Rate-Limits</strong>: bei OAuth läuft der Watchdog wie ein
+  normaler <code>claude</code>-Call gegen das Limit. Stündlich ist bei Anthropic
+  Max kein Problem; auf Pro mit engem Limit prüfen.</li>
 </ul>
+<h2 id="bezug-zu-phase-442-backend-fehler-output-auf-warn">Bezug zu Phase 4.42 (Backend-Fehler-Output auf <code>warn</code>)<a class="headerlink" href="#bezug-zu-phase-442-backend-fehler-output-auf-warn" title="Permanent link">&para;</a></h2>
+<p>Phase 4.42 hat den <strong>reaktiven</strong> Pfad gefixt: wenn ein Ticket-Run
+fehlschlägt, steht der Grund direkt im Log. Phase 4.43 baut den
+<strong>proaktiven</strong> Pfad: der Watchdog meldet den Fehler, <strong>bevor</strong> das
+nächste Ticket reinkommt. Die beiden Phasen ergänzen sich — Phase 4.42
+ist die Pflicht-Diagnose pro Ticket-Failure, Phase 4.43 ist die opt-in
+Frühwarnung pro Zeitintervall.</p>
 
 
 
@@ -3054,7 +2895,7 @@ Anforderungen muss eine Sandbox-/User-Trennung dazukommen — siehe
       <nav class="md-footer__inner md-grid" aria-label="Fußzeile" >
         
           
-          <a href="metrics.html" class="md-footer__link md-footer__link--prev" aria-label="Zurück: Metriken (Prometheus)">
+          <a href="update-notifier.html" class="md-footer__link md-footer__link--prev" aria-label="Zurück: Update-Notifier">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3064,20 +2905,20 @@ Anforderungen muss eine Sandbox-/User-Trennung dazukommen — siehe
                 Zurück
               </span>
               <div class="md-ellipsis">
-                Metriken (Prometheus)
+                Update-Notifier
               </div>
             </div>
           </a>
         
         
           
-          <a href="install-id.html" class="md-footer__link md-footer__link--next" aria-label="Weiter: Installations-Kennung (Install-ID)">
+          <a href="sandbox.html" class="md-footer__link md-footer__link--next" aria-label="Weiter: Sandbox für Agent-Ausführung">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Weiter
               </span>
               <div class="md-ellipsis">
-                Installations-Kennung (Install-ID)
+                Sandbox für Agent-Ausführung
               </div>
             </div>
             <div class="md-footer__button md-icon">

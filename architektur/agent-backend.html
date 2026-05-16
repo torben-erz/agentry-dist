@@ -1302,6 +1302,8 @@
       
         
       
+        
+      
     
     
     
@@ -1782,6 +1784,34 @@
     
   
     Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/auth-watchdog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
   
 
     
@@ -2682,10 +2712,20 @@ anderer Subprozess mit anderen Flags.</p>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="c1">/// Eindeutiger Identifier des Backends (passend zu Config.agentBackend).</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">identifier</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">get</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="c1">/// Führt den Agent gegen das Ticket im angegebenen Working-Directory aus.</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="c1">/// Der Agent darf alle Files im `workspace` lesen und schreiben.</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">ticket</span><span class="p">:</span><span class="w"> </span><span class="n">Ticket</span><span class="p">,</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">workspace</span><span class="p">:</span><span class="w"> </span><span class="n">URL</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">:</span><span class="w"> </span><span class="n">AgentRunOptions</span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">AgentResult</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="c1">/// Modellname, den das Backend per Config bekommen hat.</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="c1">/// `nil` = CLI-Default. Default via Extension `nil`.</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">configuredModel</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">?</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">get</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="c1">/// Führt den Agent gegen das Ticket im angegebenen Working-Directory aus.</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="c1">/// Der Agent darf alle Files im `workspace` lesen und schreiben.</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">ticket</span><span class="p">:</span><span class="w"> </span><span class="n">Ticket</span><span class="p">,</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">workspace</span><span class="p">:</span><span class="w"> </span><span class="n">URL</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">:</span><span class="w"> </span><span class="n">AgentRunOptions</span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">AgentResult</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="c1">/// Auth-Health-Check ohne vollen Agent-Lauf — wird vom `AuthWatchdog`</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="c1">/// periodisch aufgerufen. Default-Impl liefert `.notSupported`, neue</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="c1">/// Backends ohne eigene Implementierung sind so unsichtbar für den</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="c1">/// Watchdog. Siehe `Features → Auth-Watchdog`.</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">authHealthCheck</span><span class="p">()</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">AuthHealthResult</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
 </span></code></pre></div>
 <h2 id="agentrunoptions">AgentRunOptions<a class="headerlink" href="#agentrunoptions" title="Permanent link">&para;</a></h2>
 <div class="language-swift highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">struct</span><span class="w"> </span><span class="nc">AgentRunOptions</span><span class="p">:</span><span class="w"> </span><span class="n">Sendable</span><span class="w"> </span><span class="p">{</span>

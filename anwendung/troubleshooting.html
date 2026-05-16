@@ -1485,6 +1485,8 @@
       
         
       
+        
+      
     
     
     
@@ -1965,6 +1967,34 @@
     
   
     Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/auth-watchdog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
   
 
     
@@ -3232,26 +3262,54 @@ progress</code>, aber kein PR wurde erzeugt und keine weitere Log-Aktivität.</p
 <p>Mehr Detail: <a href="../features/crash-recovery.html">Features → Crash-Recovery</a>.</p>
 <h3 id="ticket-failt-mit-pipelinefailurephase-agentrun">Ticket failt mit <code>PipelineFailure(phase: .agentRun)</code><a class="headerlink" href="#ticket-failt-mit-pipelinefailurephase-agentrun" title="Permanent link">&para;</a></h3>
 <p><strong>Symptom:</strong> Issue bekommt <code>agent:failed</code>-Label, im PR-Kommentar steht:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Pipeline-Abbruch in Phase &#39;agentRun&#39;: ClaudeCodeBackend antwortete mit
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Exit-Code 1.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Pipeline-Abbruch in Phase &#39;agentRun&#39;: Agent-Backend &#39;claude-code&#39;
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>endete mit Exit 1.
 </span></code></pre></div>
+<p><strong>Diagnose:</strong> Agentry loggt seit Phase 4.42 bei Non-Zero-Exit
+automatisch eine <code>WARN</code>-Zeile mit stdout- <strong>und</strong> stderr-Preview
+(je 1000 Zeichen, <code>(leer)</code>-Marker wenn ein Stream nichts liefert).
+Das ist die erste Anlaufstelle:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>agentry<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span><span class="m">200</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;claude endete mit Exit|codex endete mit Exit&quot;</span>
+</span></code></pre></div>
+<p>Bei der offiziellen <code>claude</code>-CLI landen Auth-/Quota-Hinweise oft auf
+<strong>stdout</strong> statt stderr — deshalb deckt der warn-Log beide Streams ab.</p>
 <p><strong>Wahrscheinliche Ursachen:</strong></p>
 <ol>
 <li><strong>Claude/Codex-CLI nicht eingeloggt</strong> — <code>claude --version</code> muss eine
-   Version ausgeben UND ein API-Token konfiguriert haben</li>
-<li><strong>Modell nicht erreichbar</strong> — Anthropic/OpenAI-Service-Status prüfen</li>
-<li><strong>Permission-Modus blockiert</strong> — passiert nicht mehr mit
+   Version ausgeben UND ein API-Token konfiguriert haben. Wenn der
+   Daemon als Service-User läuft (<code>launchd</code>/<code>systemd</code>): der CLI-Auth-
+   Zustand ist pro Unix-User — ein <code>claude login</code> als Operator-Account
+   reicht nicht. Direkt als Service-User einloggen und dort
+   <code>claude login</code> ausführen:</li>
+</ol>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># Wenn du sudo-Recht hast:</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>agentry<span class="w"> </span>-i
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="c1"># Oder direkt als Service-User per SSH/Konsole einloggen,</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># falls der User keinen sudo-Eintrag hat.</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="c1"># Dann:</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>claude<span class="w"> </span>login
+</span></code></pre></div>
+<p>Headless-Alternative ohne interaktiven Browser-Login: API-Key
+   über <code>ANTHROPIC_API_KEY</code> im Service-Manifest (Plist/Systemd-Unit)
+   setzen.</p>
+<p><strong>Vor dem nächsten Ticket testen:</strong> <code>agentry auth check</code> macht einen
+   Single-Shot über alle konfigurierten Backends (kein Daemon nötig).
+   Bei OAuth-Setups, die stundenlang idle stehen, lohnt sich zusätzlich
+   <code>authWatchdogEnabled: true</code> in der Config — der Watchdog meldet
+   Token-Verfall, bevor das nächste Ticket darauf läuft. Details:
+   <a href="../features/auth-watchdog.html">Features → Auth-Watchdog</a>.
+2. <strong>Modell nicht erreichbar</strong> — Anthropic/OpenAI-Service-Status prüfen
+3. <strong>Permission-Modus blockiert</strong> — passiert nicht mehr mit
    <code>--permission-mode bypassPermissions</code>, den Agentry default setzt;
    wenn doch: <code>claude --version</code> neu prüfen, Update kann eine
-   Inkompatibilität gebracht haben</li>
-<li><strong>Sandbox blockt einen Pfad, den der Agent braucht</strong> — Symptom:
-   Sandbox-Violation im stderr. Lösung: <code>extraReadOnlyBinds</code> /
-   <code>extraWritePaths</code> in <code>sandbox.strategies</code> ergänzen</li>
-</ol>
-<p>Diagnose-Befehl: <code>agentry logs -n 200 | grep -A 5 'ClaudeCodeBackend'</code>.</p>
+   Inkompatibilität gebracht haben
+4. <strong>Sandbox blockt einen Pfad, den der Agent braucht</strong> — Symptom:
+   Sandbox-Violation im stderr-Preview der warn-Zeile. Lösung:
+   <code>extraReadOnlyBinds</code> / <code>extraWritePaths</code> in <code>sandbox.strategies</code>
+   ergänzen.</p>
 <h3 id="ticket-failt-in-phase-push">Ticket failt in Phase <code>.push</code><a class="headerlink" href="#ticket-failt-in-phase-push" title="Permanent link">&para;</a></h3>
 <p><strong>Symptom:</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Pipeline-Abbruch in Phase &#39;push&#39;: git push schlug fehl mit Exit-Code 128.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Pipeline-Abbruch in Phase &#39;push&#39;: git push schlug fehl mit Exit-Code 128.
 </span></code></pre></div>
 <p><strong>Wahrscheinliche Ursachen:</strong></p>
 <ol>
@@ -3272,9 +3330,9 @@ progress</code>, aber kein PR wurde erzeugt und keine weitere Log-Aktivität.</p
 <p><strong>Wahrscheinliche Ursache:</strong> Der Daemon ist nach dem PR-Push gecrasht,
 bevor er das Status-Label flippen konnte.</p>
 <p><strong>Lösung:</strong> Manuell:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span>--remove-label<span class="w"> </span><span class="s2">&quot;agent:in-progress&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span>--add-label<span class="w"> </span><span class="s2">&quot;agent:done&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>gh<span class="w"> </span>issue<span class="w"> </span>edit<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">    </span>--remove-label<span class="w"> </span><span class="s2">&quot;agent:in-progress&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span>--add-label<span class="w"> </span><span class="s2">&quot;agent:done&quot;</span>
 </span></code></pre></div>
 <p>CrashRecovery erkennt das beim nächsten Start als „bereits erledigt"
 und überspringt es.</p>
@@ -3282,23 +3340,23 @@ und überspringt es.</p>
 <p><strong>Symptom:</strong> Du setzt <code>agent-revise</code> auf einen offenen PR, im Daemon-
 Log passiert nichts.</p>
 <p><strong>Diagnose:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>agentry<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>revise<span class="w">          </span><span class="c1"># reviseEnabled: true?</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>gh<span class="w"> </span>pr<span class="w"> </span>view<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span>--json<span class="w"> </span>labels
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>agentry<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>revise<span class="w">          </span><span class="c1"># reviseEnabled: true?</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>gh<span class="w"> </span>pr<span class="w"> </span>view<span class="w"> </span>&lt;n&gt;<span class="w"> </span>-R<span class="w"> </span>&lt;owner&gt;/&lt;repo&gt;<span class="w"> </span>--json<span class="w"> </span>labels
 </span></code></pre></div>
 <p><strong>Lösung:</strong></p>
 <ol>
 <li><strong><code>reviseEnabled: false</code></strong> in der Config — auf <code>true</code> setzen</li>
 <li><strong>Falsches <code>reviseLabel</code></strong> — Default ist <code>"agent-revise"</code>. Wenn du
    den Namen geändert hast, muss das Label im Repo angepasst werden:
-   <div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>agentry<span class="w"> </span>labels<span class="w"> </span>install
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>agentry<span class="w"> </span>labels<span class="w"> </span>install
 </span></code></pre></div></li>
 <li><strong>PR ist geschlossen oder gemergt</strong> — Revise greift nur auf offene PRs</li>
 </ol>
 <h2 id="update-distribution">Update &amp; Distribution<a class="headerlink" href="#update-distribution" title="Permanent link">&para;</a></h2>
 <h3 id="agentry-update-sagt-update-check-fehlgeschlagen"><code>agentry update</code> sagt „Update-Check fehlgeschlagen"<a class="headerlink" href="#agentry-update-sagt-update-check-fehlgeschlagen" title="Permanent link">&para;</a></h3>
 <p><strong>Symptom:</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Update-Check fehlgeschlagen: GitHub-Release konnte nicht abgefragt werden.
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>Exit 2.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Update-Check fehlgeschlagen: GitHub-Release konnte nicht abgefragt werden.
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>Exit 2.
 </span></code></pre></div>
 <p><strong>Wahrscheinliche Ursachen:</strong></p>
 <ol>
@@ -3317,13 +3375,13 @@ Log passiert nichts.</p>
 <p><strong>Wahrscheinliche Ursache:</strong> Der lokale Tap-Cache ist nicht
 synchronisiert.</p>
 <p><strong>Lösung:</strong></p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>brew<span class="w"> </span>update<span class="w">                          </span><span class="c1"># Tap-Stand neu holen</span>
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>brew<span class="w"> </span>update<span class="w">                          </span><span class="c1"># Tap-Stand neu holen</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
 </span></code></pre></div>
 <p>Wenn <code>brew update</code> selbst hängt: Tap-Repo direkt frisch holen:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>brew<span class="w"> </span>untap<span class="w"> </span>torben-erz/agentry
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>brew<span class="w"> </span>tap<span class="w"> </span>torben-erz/agentry
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>brew<span class="w"> </span>untap<span class="w"> </span>torben-erz/agentry
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>brew<span class="w"> </span>tap<span class="w"> </span>torben-erz/agentry
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>agentry
 </span></code></pre></div>
 <h2 id="bekannte-limitierungen-kein-bug">Bekannte Limitierungen (kein Bug)<a class="headerlink" href="#bekannte-limitierungen-kein-bug" title="Permanent link">&para;</a></h2>
 <table>

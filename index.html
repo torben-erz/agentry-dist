@@ -1298,6 +1298,8 @@
       
         
       
+        
+      
     
     
     
@@ -1778,6 +1780,34 @@
     
   
     Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="features/auth-watchdog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
   
 
     
@@ -2776,6 +2806,16 @@ Crash-Recovery für hängende Tickets. Feature-Seiten:
   (<code>"env"</code>/<code>"keychain"</code>/<code>"libsecret"</code>/<code>"file"</code>/<code>"cli"</code>) zur Source-
   Erzwingung, <code>TokenRotator</code> mit SIGHUP-Listener für Live-Rotation.
   Siehe <a href="features/token-handling.html">Token-Handling</a>.</li>
+<li><strong>4.42</strong> Backend-Fehler-Output auf <code>warn</code> — bei Non-Zero-Exit der
+  Vendor-CLI loggt Agentry stdout+stderr-Preview als WARN (statt
+  <code>debug</code>). Beta-Tester sehen Auth-/Quota-/Sandbox-Bail-out
+  direkt im Standard-Log. Siehe
+  <a href="anwendung/troubleshooting.html#ticket-failt-mit-pipelinefailurephase-agentrun">Troubleshooting</a>.</li>
+<li><strong>4.43</strong> <a href="features/auth-watchdog.html">Auth-Watchdog</a> — opt-in
+  periodischer Health-Check der Vendor-CLI-Auth (<code>claude</code>/<code>codex</code>).
+  Auto-Detect: API-Key via gratis <code>/v1/models</code>-Call, sonst CLI-
+  Smoke-Test. WARN-Log + <code>agentry_auth_*</code>-Metriken, sobald die
+  Session bröckelt. Single-Shot via <code>agentry auth check</code>.</li>
 </ul>
 <h3 id="phase-5-geschaftsmodell-offen">Phase 5 — Geschäftsmodell ⏸ offen<a class="headerlink" href="#phase-5-geschaftsmodell-offen" title="Permanent link">&para;</a></h3>
 <p>Lizenz-/Subscription-Mechanismus, Update-Notifier, Endnutzer-Dokumentation
@@ -2783,7 +2823,7 @@ Crash-Recovery für hängende Tickets. Feature-Seiten:
 offenen Punkte (inkl. Distributions-Reste, optionale Sandbox-Strategien
 und Blocker-Entscheidungen) in
 <a href="produkt/offene-punkte.html">Offene Punkte</a>.</p>
-<p><strong>267 Unit-Tests, alle grün.</strong></p>
+<p><strong>354 Unit-Tests, alle grün.</strong></p>
 <h2 id="wo-gehts-weiter">Wo geht's weiter?<a class="headerlink" href="#wo-gehts-weiter" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong><a href="getting-started/installation.html">Installation</a></strong> — System-Voraussetzungen, Tool-Setup.</li>

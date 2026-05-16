@@ -856,6 +856,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#auth-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth-Watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1524,6 +1535,8 @@
       
         
       
+        
+      
     
     
     
@@ -2004,6 +2017,34 @@
     
   
     Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/auth-watchdog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
   
 
     
@@ -3002,6 +3043,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#auth-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth-Watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3584,6 +3636,35 @@ globale Config anzufassen — siehe
 </tbody>
 </table>
 <p>Details: <a href="../features/update-notifier.html">Features → Update-Notifier</a>.</p>
+<h3 id="auth-watchdog">Auth-Watchdog<a class="headerlink" href="#auth-watchdog" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Schlüssel</th>
+<th>Default</th>
+<th>Wofür</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>authWatchdogEnabled</code></td>
+<td><code>false</code></td>
+<td>Periodischer Health-Check der Vendor-CLI-Auth (<code>claude</code>/<code>codex</code>). Bei <code>true</code> siehst du OAuth-Token-Ablauf, <strong>bevor</strong> das nächste Ticket darauf läuft.</td>
+</tr>
+<tr>
+<td><code>authWatchdogIntervalSeconds</code></td>
+<td><code>3600</code> (1 h)</td>
+<td>Abstand zwischen Checks. Untergrenze 60 s.</td>
+</tr>
+</tbody>
+</table>
+<p>Wann sinnvoll: Daemon läuft als Service und wartet lange auf neue
+Tickets — typisches Beta-Setup. Bei API-Key-only-Deployments
+(<code>ANTHROPIC_API_KEY</code>/<code>OPENAI_API_KEY</code> ohne Token-Ablauf) bringt der
+Watchdog nichts und kann aus bleiben.</p>
+<p>Single-Shot ohne Daemon: <code>agentry auth check</code>. Druckt pro Backend
+✅/❌ mit Begründung. Ideal für die Erstinstallation.</p>
+<p>Details: <a href="../features/auth-watchdog.html">Features → Auth-Watchdog</a>.</p>
 <h2 id="typische-operator-profile">Typische Operator-Profile<a class="headerlink" href="#typische-operator-profile" title="Permanent link">&para;</a></h2>
 <p>Drei häufige Setups als Vorlage — jeweils nur die Schlüssel, die vom
 Default abweichen:</p>

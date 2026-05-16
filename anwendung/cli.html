@@ -1285,6 +1285,8 @@
       
         
       
+        
+      
     
     
     
@@ -1765,6 +1767,34 @@
     
   
     Update-Notifier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/auth-watchdog.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth-Watchdog
   
 
     
@@ -2758,6 +2788,10 @@ catched Tippfehler, fehlende Pflichtschlüssel und ungültige Werte
 <td><code>agentry update</code></td>
 </tr>
 <tr>
+<td>Auth-Check der Vendor-CLIs</td>
+<td><code>agentry auth check</code></td>
+</tr>
+<tr>
 <td>Diagnose für Bug-Report</td>
 <td><code>agentry diagnose | pbcopy</code></td>
 </tr>
@@ -2770,6 +2804,14 @@ wenn der Daemon läuft und <code>healthEnabled</code> aktiviert ist (Default).</
 Plattform, Tool-Verfügbarkeit und den letzten 30 WARN/ERROR-Log-
 Zeilen — sicher per Mail oder Chat zu teilen, keine Tokens oder
 Code-Inhalte drin.</p>
+<p><code>agentry auth check</code> ist ein Single-Shot, der pro konfiguriertem
+Backend (<code>claude-code</code>, <code>codex</code>) die Vendor-Auth prüft — bei
+API-Key gegen <code>/v1/models</code> (gratis), sonst per CLI-Smoke-Test.
+Druckt ✅/❌ pro Backend und exit 1, wenn mindestens eines failt.
+Ideal vor dem ersten Daemon-Start und bei Beta-Setups, in denen
+das OAuth-Token unbemerkt ablaufen kann. Periodische Variante via
+<code>authWatchdogEnabled: true</code> in der Config — siehe
+<a href="../features/auth-watchdog.html">Features → Auth-Watchdog</a>.</p>
 <h2 id="information">Information<a class="headerlink" href="#information" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
